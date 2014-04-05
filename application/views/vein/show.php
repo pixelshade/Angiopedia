@@ -1,9 +1,13 @@
 
-<div id="bone">
+<div id="viewBox">
  <?php 
  var_dump($vein);
  ?>
 </div>
+
+ <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#processing-modal">
+            <i class="glyphicon glyphicon-play"></i> Start Processing
+        </button>   
 
 <!-- Static Modal -->
 <div class="modal modal-static fade" id="processing-modal" role="dialog" aria-hidden="true">
@@ -62,4 +66,4 @@
       <input type="range" name="range" min="1" max="100" value="50" onchange="rangeDanger.value=value">
       <output id="rangeDanger">50</output>
     </div>
-  </div>
+  </div> 
