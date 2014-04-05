@@ -1,4 +1,14 @@
 <h3><?php echo empty($vein->id) ? 'Add a new vein' : 'Edit vein ' . $vein->name; ?></h3>
+	<script type="text/javascript">  
+		<?php 
+		$isEditing = empty($vein->id) ? "false" : "true";
+		echo "var isEditingVein = ".$isEditing.";";
+		echo  "var veinJson = ".json_encode($vein). ";";
+        // echo  "var veinParts = ".json_encode($veinParts);
+		?>
+	</script>
+<div id="viewBox">
+</div>
 <?php echo validation_errors(); ?>
 <?php echo form_open(); ?>
 <table class="table">
@@ -26,6 +36,46 @@
 	<tr>	
 		<td>Info</td>
 		<td><?php echo form_textarea('info', set_value('info', $vein->info), 'class="tinymce"'); ?></td>
+	</tr>
+	<tr class="">	
+		<td>scale_x</td>
+		<td><?php echo form_input('scale_x', set_value('scale_x', $vein->scale_x), 'class="form-control"'); ?></td>
+	</tr>
+	<tr class="">	
+		<td>scale_y</td>
+		<td><?php echo form_input('scale_y', set_value('scale_y', $vein->scale_y), 'class="form-control"'); ?></td>
+	</tr>
+	<tr class="">	
+		<td>scale_z</td>
+		<td><?php echo form_input('scale_z', set_value('scale_z', $vein->scale_z), 'class="form-control"'); ?></td>
+	</tr>
+	<tr class="">	
+		<td>rotation_x</td>
+		<td><?php echo form_input('rotation_x', set_value('rotation_x', $vein->rotation_x), 'class="form-control"'); ?></td>
+	</tr>
+	<tr class="">	
+		<td>rotation_y</td>
+		<td><?php echo form_input('rotation_y', set_value('rotation_y', $vein->rotation_y), 'class="form-control"'); ?></td>
+	</tr>
+	<tr class="">	
+		<td>rotation_z</td>
+		<td><?php echo form_input('rotation_z', set_value('rotation_z', $vein->rotation_z), 'class="form-control"'); ?></td>
+	</tr>
+	<tr class="">	
+		<td>position_x</td>
+		<td><?php echo form_input('position_x', set_value('position_x', $vein->position_x), 'class="form-control"'); ?></td>
+	</tr>
+	<tr class="">	
+		<td>position_y</td>
+		<td><?php echo form_input('position_y', set_value('position_y', $vein->position_y), 'class="form-control"'); ?></td>
+	</tr>
+	<tr class="">	
+		<td>position_z</td>
+		<td><?php echo form_input('position_z', set_value('position_z', $vein->position_z), 'class="form-control"'); ?></td>
+	</tr>
+	<tr>
+		<td>published</td>
+		<td><?php echo form_boolean_dropdown('published' ,$vein->published); ?></td>
 	</tr>
 	<tr>
 		<td></td>

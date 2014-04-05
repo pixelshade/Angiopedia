@@ -1,11 +1,12 @@
 <?php
 function btn_edit($uri){
- 	return anchor($uri, '<i class="icon-edit"></i>');
+ 	return anchor($uri,' <span class="glyphicon glyphicon-edit"></span> Edit', 'class="btn btn-primary"');
 }
 
-function btn_delete($uri){
-	return anchor($uri, '<i class="icon-remove"></i>', array(
-		'onclick' => "return confirm('You are about to delete a record. This cannot be undone.');"
+function btn_delete($uri){  
+	return anchor($uri, ' <span class="glyphicon glyphicon-remove"></span> Delete', array(
+		'onclick' => "return confirm('You are going to delete. This cannot be undone.');",
+        'class' => "btn btn-danger"
 		));	
 }
 
@@ -86,6 +87,17 @@ if (!function_exists('dump_exit')) {
 
 if (!function_exists('form_boolean_select')) {
     function form_boolean_select($name, $default_true = FALSE) {
+        ?>
+        <select name="<?php echo $name; ?>">
+            <option value="1" <?php echo set_select($name, '1', $default_true); ?> >TRUE</option>
+            <option value="0" <?php echo set_select($name, '0', !$default_true); ?> >FALSE</option>           
+        </select>
+        <?
+    }
+}
+
+if (!function_exists('form_boolean_dropdown')) {
+    function form_boolean_dropdown($name, $default_true = FALSE) {
         ?>
         <select name="<?php echo $name; ?>">
             <option value="1" <?php echo set_select($name, '1', $default_true); ?> >TRUE</option>

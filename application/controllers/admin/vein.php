@@ -11,8 +11,8 @@ class Vein extends Admin_Controller
 
 		// Veins for dropdown
 		$this->data['categories'] = $this->category_m->get_for_dropdown();
-		$this->data['images'] = $this->content_files_model->get_for_dropdown();
-		$this->data['models'] = $this->content_files_model->get_for_dropdown();
+		$this->data['images'] = $this->content_files_model->get_images_for_dropdown();
+		$this->data['models'] = $this->content_files_model->get_models_for_dropdown();
 	}
 
 	public function index ()
@@ -71,7 +71,17 @@ class Vein extends Admin_Controller
 				'slug', 
 				'model', 
 				'image',
-				'info'
+				'info',
+				'scale_x',
+				'scale_y',
+				'scale_z',
+				'rotation_x',
+				'rotation_y',
+				'rotation_z',
+				'position_x',
+				'position_y',
+				'position_z',
+				'published',
 			));
 			$this->vein_m->save($data, $id);
 			redirect('admin/vein');

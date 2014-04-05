@@ -2,7 +2,7 @@
   <div id="viewBox">
     <script type="text/javascript">  
      <?php 
-     echo  "var vein = ".json_encode($vein). ";";
+     echo  "var veinJson = ".json_encode($vein). ";";
      // echo  "var veinParts = ".json_encode($veinParts);
      ?>
    </script>

@@ -2,23 +2,27 @@
 	<h2>Veins</h2>	
 	
 	<?php if(count($veins)): foreach($veins as $vein): ?>	
-		<div class="row">
+		<!-- <div class="row"> -->
 			<div class="col-sm-6 col-md-4">
 				<div class="thumbnail">
-					<img data-src="holder.js/300x200" alt="...">
+					<?php
+					echo '<img src="/app_content/'.$vein->image.'" alt="'.$vein->name.'">';
+					?>
 					<div class="caption">
 						<h3><?php echo anchor('/vein/show/' . $vein->slug, $vein->name); ?></h3>
-						<p>							
-							<?php echo $vein->category_id; ?>
-							<?php echo $vein->model; ?>
-							<?php echo $vein->info; ?>
-							<?php echo $vein->image; ?>
+						<p>			
+							<?php
+							if(array_key_exists($vein->category_id, $categories)){
+								echo $categories[$vein->category_id]; 
+							}
+							?>							
+							<?php echo $vein->info; ?>							
 						</p>
-						<p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+						<p><a href=<?php echo '"/vein/show/' . $vein->slug.'"'; ?> class="btn btn-primary" role="button">Detail</a></p>
 					</div>
 				</div>
 			</div>
-		</div>		
+		<!-- </div>		 -->
 	<?php endforeach; ?>
 <?php else: ?>
 

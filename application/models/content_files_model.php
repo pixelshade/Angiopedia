@@ -48,6 +48,34 @@ class Content_Files_Model extends CI_Model {
 
 public function get_for_dropdown(){
     $results = $this->db->get('content_files')->result_array();
+    $empty = array('' => "No file");
+    if (count($results) > 0) {                                            
+        foreach ($results as $value) {
+            $filenames[$value['filename']] = $value['filename'];               
+        }                          
+        $results = array_merge($empty,$filenames);
+    } else {
+        $results = $empty;
+    }
+    return $results;
+}
+
+public function get_models_for_dropdown(){
+    $results = $this->get_all_models();
+    $empty = array('' => "No model");
+    if (count($results) > 0) {                                            
+        foreach ($results as $value) {
+            $filenames[$value['filename']] = $value['filename'];               
+        }                          
+        $results = array_merge($empty,$filenames);
+    } else {
+        $results = $empty;
+    }
+    return $results;
+}
+
+public function get_images_for_dropdown(){
+    $results = $this->get_all_images();
     $empty = array('' => "No image");
     if (count($results) > 0) {                                            
         foreach ($results as $value) {
@@ -60,7 +88,18 @@ public function get_for_dropdown(){
     return $results;
 }
 
+
 public function get_all(){ 
+    return $this->db->get('content_files')->result_array(); 
+}
+
+public function get_all_models(){ 
+    $this->db->like('filename', '.js', 'before'); 
+    return $this->db->get('content_files')->result_array(); 
+}
+
+public function get_all_images(){ 
+    $this->db->not_like('filename', '.js', 'before'); 
     return $this->db->get('content_files')->result_array(); 
 }
 

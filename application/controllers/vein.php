@@ -6,13 +6,15 @@ class Vein extends User_Controller
 	{
 		parent::__construct();
 		$this->load->model('vein_m');
+		$this->load->model('category_m');
+		$this->data['categories'] = $this->category_m->get();
 	}
 
 	public function index ()
 	{
 		// Fetch all veins
-		$this->data['veins'] = $this->vein_m->get_with_parent();
-		
+		$this->data['veins'] = $this->vein_m->get_by('`published` = "1"');
+
 		// Load view
 		$this->data['subview'] = 'vein/index';
 		$this->load->view('_layout_main', $this->data);

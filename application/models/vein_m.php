@@ -8,33 +8,38 @@ class Vein_m extends MY_Model
 			'field' => 'category_id', 
 			'label' => 'Category', 
 			'rules' => 'trim|intval'
-		), 
+			), 
 		'name' => array(
 			'field' => 'name', 
 			'label' => 'name', 
 			'rules' => 'trim|required|max_length[100]|xss_clean'
-		), 
+			), 
 		'slug' => array(
 			'field' => 'slug', 
 			'label' => 'Slug', 
 			'rules' => 'trim|required|max_length[100]|url_name|callback__unique_slug|xss_clean'
-		), 
+			), 
 		'model' => array(
 			'field' => 'model', 
 			'label' => 'Model', 
 			'rules' => 'trim|required'
-		),
+			),
 		'image' => array(
 			'field' => 'image', 
 			'label' => 'image', 
 			'rules' => 'trim|required'
-		),
+			),
 		'info' => array(
 			'field' => 'info', 
 			'label' => 'Info', 
-			'rules' => 'trim|required'
-		)
-	);
+			'rules' => 'trim'
+			),
+		'published' => array(
+			'field' => 'published',
+			'label' => 'published', 
+			'rules' => 'intval|required'
+			)
+		);
 
 	public function get_new ()
 	{
@@ -45,6 +50,16 @@ class Vein_m extends MY_Model
 		$vein->image = '';
 		$vein->model = '';
 		$vein->category_id = -1;
+		$vein->scale_x = '1';
+		$vein->scale_y = '1';
+		$vein->scale_z = '1';
+		$vein->rotation_x = '0';
+		$vein->rotation_y = '0';
+		$vein->rotation_z = '0';
+		$vein->position_x = '0';
+		$vein->position_y = '0';
+		$vein->position_z = '0';
+		$vein->published = '1';
 		return $vein;
 	}
 
@@ -103,7 +118,7 @@ class Vein_m extends MY_Model
 		// Return key => value pair array
 		$array = array(
 			0 => 'No parent'
-		);
+			);
 		if (count($veins)) {
 			foreach ($veins as $vein) {
 				$array[$vein->id] = $vein->name;

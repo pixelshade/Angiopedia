@@ -2,12 +2,12 @@
 class Vein_part_m extends MY_Model
 {
 	protected $_table_name = 'vein_parts';
-	protected $_order_by = 'id';
+	protected $_order_by = 'vein_id';
 	public $rules = array(
 		'vein_id' => array(
 			'field' => 'vein_id', 
 			'label' => 'Vein', 
-			'rules' => 'trim|intval'
+			'rules' => 'trim|intval|greater_than[-1]|required'
 			), 
 		'name' => array(
 			'field' => 'name', 

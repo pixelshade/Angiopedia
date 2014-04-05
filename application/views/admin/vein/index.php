@@ -9,6 +9,9 @@
 				<th>model</th>
 				<th>image</th>
 				<th>info</th>
+				
+
+				<th>pubslihed</th>
 				<th>Edit</th>
 				<th>Delete</th>
 			</tr>
@@ -21,6 +24,8 @@
 			<td><?php echo $vein->model; ?></td>
 			<td><?php echo $vein->image; ?></td>
 			<td><?php echo $vein->info; ?></td>
+			<td><?php echo $vein->published; ?></td>
+		
 			<td><?php echo btn_edit('admin/vein/edit/' . $vein->id); ?></td>
 			<td><?php echo btn_delete('admin/vein/delete/' . $vein->id); ?></td>
 		</tr>
