@@ -20,7 +20,7 @@ class Vein extends User_Controller
 
 	public function show ($slug = NULL) 
 	{
-		$vein = $this->vein_m->get_by('slug = "'.$slug.'"');
+		$vein = $this->vein_m->get_by('slug = "'.$slug.'"', TRUE);
 		if(count($slug) && $slug != NULL){
 			$this->data['vein'] = $vein;
 			$this->data['subview'] = 'vein/show';

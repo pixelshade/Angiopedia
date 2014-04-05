@@ -1,8 +1,8 @@
  <?php $this->load->view('include/header.php'); ?>
 
  <?php  $page = $this->uri->segment(1); ?>
- <div class="container">
- 	<div class="navbar navbar-default" role="navigation">
+ <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+ 	<div class="container">
  		<div class="navbar-header">
  			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
  				<span class="sr-only">Toggle navigation</span>
@@ -30,17 +30,19 @@
 				<li <?php echo $page=="about"? 'class="active"' : ''; ?>><a href="/about/">About</a></li>			
 			</ul>
 			<div class="col-sm-3 col-md-3 navbar-right">
-			<form class="navbar-form" role="search">
-				<div class="input-group">
-					<input type="text" class="form-control" placeholder="Search" name="q">
-					<div class="input-group-btn">
-						<button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+				<form class="navbar-form" role="search">
+					<div class="input-group">
+						<input type="text" class="form-control" placeholder="Search" name="q">
+						<div class="input-group-btn">
+							<button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+						</div>
 					</div>
-				</div>
-			</form>
-		</div>
+				</form>
+			</div>
 		</div>
 	</div>
+</div>
+<div class="container">
 
 	<?php $this->load->view($subview); ?>
 

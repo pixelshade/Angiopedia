@@ -11,7 +11,7 @@ class Vein_m extends MY_Model
 		), 
 		'name' => array(
 			'field' => 'name', 
-			'label' => 'Title', 
+			'label' => 'name', 
 			'rules' => 'trim|required|max_length[100]|xss_clean'
 		), 
 		'slug' => array(
@@ -25,8 +25,8 @@ class Vein_m extends MY_Model
 			'rules' => 'trim|required'
 		),
 		'image' => array(
-			'field' => 'model', 
-			'label' => 'Model', 
+			'field' => 'image', 
+			'label' => 'image', 
 			'rules' => 'trim|required'
 		),
 		'info' => array(
@@ -53,10 +53,9 @@ class Vein_m extends MY_Model
 		// Delete a vein
 		parent::delete($id);
 		
-		// Reset parent ID for its children
-		$this->db->set(array(
-			'category_id' => 0
-		))->where('category_id', $id)->update($this->_table_name);
+		// Delte children
+		$this->db->delete('vein_parts', array('vein_id' => $id)); 
+		
 	}
 
 	public function save_order ($veins)
@@ -112,5 +111,13 @@ class Vein_m extends MY_Model
 		}
 		
 		return $array;
+	}
+
+	public function get_for_dropdown(){
+		$empty = array(-1 => 'No vein');
+		$result = $this->get_array();		
+		$result = array_column($result, 'name', 'id');
+		$result = $empty + $result;		
+		return $result;
 	}
 }

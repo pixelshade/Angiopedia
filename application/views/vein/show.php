@@ -1,27 +1,34 @@
-
-<div id="viewBox">
- <?php 
- var_dump($vein);
- ?>
+<div>
+  <div id="viewBox">
+    <script type="text/javascript">  
+     <?php 
+     echo  "var vein = ".json_encode($vein). ";";
+     // echo  "var veinParts = ".json_encode($veinParts);
+     ?>
+   </script>
+ </div>
 </div>
 
- <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#processing-modal">
-            <i class="glyphicon glyphicon-play"></i> Start Processing
-        </button>   
+<!-- <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#loading-modal">
+  <i class="glyphicon glyphicon-play"></i> Start Processing
+</button>    -->
 
-<!-- Static Modal -->
-<div class="modal modal-static fade" id="processing-modal" role="dialog" aria-hidden="true">
+<!-- Static Modal
+<div class="modal modal-static fade" id="loading-modal" role="dialog" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-body">
         <div class="text-center">
           <img src="http://www.travislayne.com/images/loading.gif" class="icon" />
-          <h4>Processing... <button type="button" class="close" style="float: none;" data-dismiss="modal" aria-hidden="true">×</button></h4>
+          <h4>Loading... <button type="button" class="close" style="float: none;" data-dismiss="modal" aria-hidden="true">×</button></h4>
         </div>
       </div>
     </div>
   </div>
 </div>
+ -->
+
+
 
 
 <div class="row">
