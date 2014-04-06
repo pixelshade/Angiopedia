@@ -71,16 +71,16 @@ class Vein_part_m extends MY_Model
 			),
 		);
 
-public function get_new ()
+public function get_new ($vein_id)
 {
 	$vein = new stdClass();
-	$vein->vein_id = 0;
+	$vein->vein_id = $vein_id;
 	$vein->name = '';
 	$vein->info = '';		
 	$vein->image = '';
-	$vein->scale_x = '0';
-	$vein->scale_y = '0';
-	$vein->scale_z = '0';
+	$vein->scale_x = '1';
+	$vein->scale_y = '1';
+	$vein->scale_z = '1';
 	$vein->rotation_x = '0';
 	$vein->rotation_y = '0';
 	$vein->rotation_z = '0';

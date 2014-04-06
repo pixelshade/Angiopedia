@@ -2,8 +2,10 @@
  <div id="viewBox">
     <script type="text/javascript">  
      <?php 
-     echo  "var vein = ".json_encode($vein_part). ";";
-     // echo  "var veinParts = ".json_encode($veinParts);
+  $isEditing = empty($vein_part->id) ? "false" : "true";
+		echo "var isEditingVeinPart = ".$isEditing.";";
+		echo  "var veinJson = ".json_encode($vein). ";";
+        // echo  "var veinParts = ".json_encode($veinParts);
      ?>
    </script>
 <?php echo validation_errors(); ?>

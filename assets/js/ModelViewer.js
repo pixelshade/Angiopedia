@@ -1,11 +1,12 @@
 
-var camera, scene, renderer, control, viewBox, mainVein;
+var camera, scene, renderer, control, viewBox, mainVein, stats;
+var veinPartsInScene = [];
 var viewBoxWidth, viewBoxHeight;
 var aspectRatio = 1.7;
 var folder = "../../../app_content/";
 
 init();
-render();
+animate();
 
 function init() {
 	
@@ -13,8 +14,7 @@ function init() {
 
 				//set up width
 				viewBoxWidth = $("#viewBox").width();
-				viewBoxHeight = viewBoxWidth / aspectRatio;
-
+				viewBoxHeight = window.innerHeight-200;// viewBoxWidth / aspectRatio;
 
 
 				renderer = new THREE.WebGLRenderer();
@@ -25,16 +25,17 @@ function init() {
 
 				viewBox.appendChild( renderer.domElement );
 
-				camera = new THREE.PerspectiveCamera( 70, viewBoxWidth / viewBoxHeight, 1, 5000 );
+				camera = new THREE.PerspectiveCamera( 60, viewBoxWidth / viewBoxHeight, 1, 5000 );
 				camera.position.set( 0, 0, 200 );
-				camera.lookAt( new THREE.Vector3( 0, 0, 0 ) );
+							
 
 				scene = new THREE.Scene();
 				// scene.add( new THREE.GridHelper( 500, 100 ) );
 
 				setUpLightning();
-
+				loadParts(veinPartsJson);
 				loadModel(veinJson.model);
+				addStats();
 
 			// var texture = THREE.ImageUtils.loadTexture( 'textures/crate.gif', new THREE.UVMapping(), render );
 			// texture.anisotropy = renderer.getMaxAnisotropy();
@@ -58,10 +59,11 @@ function init() {
 		}
 
 		function onWindowResize() {
+			control.handleResize();
 //set up width
-				viewBoxWidth = $("#viewBox").width();
-				viewBoxHeight = viewBoxWidth / aspectRatio;
-				renderer.setSize( viewBoxWidth, viewBoxHeight );
+			viewBoxWidth = $("#viewBox").width();
+			viewBoxHeight = viewBoxWidth / aspectRatio;
+			renderer.setSize( viewBoxWidth, viewBoxHeight );
 			camera.aspect = viewBoxWidth / viewBoxHeight;
 			camera.updateProjectionMatrix();
 
@@ -71,8 +73,14 @@ function init() {
 
 		}
 
-		function render() {
+			function animate() {
+				requestAnimationFrame( animate );
 				if(control!=null) control.update();
+				console.log("yolo");
+			}
+
+
+		function render() {
 
 			renderer.render( scene, camera );
 
@@ -86,24 +94,43 @@ function init() {
 				loader.load( folder+modelName, function ( geometry ) {
 
 				geometry.computeVertexNormals();
-				material = new THREE.MeshLambertMaterial( {color: 0xCC0000, shading: THREE.FlatShading, overdraw: true}) ;	//new THREE.MeshNormalMaterial( {color: 0x66CCFF , shading: THREE.SmoothShading});
-				material = new THREE.MeshNormalMaterial( {color: 0x66CCFF });
+				// material = new THREE.MeshLambertMaterial( {color: 0xCC0000, shading: THREE.FlatShading, overdraw: true}) ;					
+				material = new THREE.MeshNormalMaterial( {color: 0x66CCFF , shading: THREE.SmoothShading});
 				mainVein = new THREE.Mesh( geometry, material ); 
-				// 			
-				// mainVein = new THREE.Mesh( geom, new THREE.MeshLambertMaterial( { color: 0xffffff, overdraw: true } ) );
+				
+				
 		 		mainVein.name="vein";
+		 		scene.add( mainVein );		 	
 		 		activePart = mainVein;
-		 		scene.add( mainVein );
-		 		 mainVein.scale.x = mainVein.scale.y = mainVein.scale.z = 1;
 
 				setModelWithJsonParams(mainVein, veinJson);			
-		 		addControls(mainVein);	
+		 		// addControls(mainVein);	
+		 		addTrackballControls(activePart ,viewBox);
+		 		
 		 		render();
 		 		
-			console.log(mainVein);
+			
 		 	} );				
 		
 			}
+		}
+
+		function addTrackballControls(model, domElement){
+			control = new THREE.TrackballControls( camera, domElement );
+
+				control.rotateSpeed = 1.0;
+				control.zoomSpeed = 1.2;
+				control.panSpeed = 0.8;
+
+				control.noZoom = false;
+				control.noPan = false;
+
+				control.staticMoving = true;
+				control.dynamicDampingFactor = 0.3;
+
+				control.keys = [ 65, 83, 68 ];
+
+				control.addEventListener( 'change', render );
 		}
 
 
@@ -181,14 +208,56 @@ function init() {
 			}
 		}
 
+
+	function loadParts(jsonArray){
+				var veinParts = jsonArray;
+				if(veinParts!=null){
+					for (var i = veinParts.length - 1; i >= 0; i--) {				
+						geometry = new THREE.SphereGeometry( 30, 16, 16);					
+
+						material = new THREE.MeshBasicMaterial({color:0x389CD1, transparent: true, opacity: 0.8});//THREE.MeshLambertMaterial( {color: 0x389CD1});// new THREE.MeshNormalMaterial();						
+
+						veinPartsInScene[i]= new THREE.Mesh(geometry,material);					
+						veinPartsInScene[i].visible = false;
+
+						scene.add( veinPartsInScene[i] );
+
+					//	veinPartsInScene[i].material.emissive.setHex( 0x000000 );
+					veinPartsInScene[i].position.x=veinParts[i].position_x;
+					veinPartsInScene[i].position.y=veinParts[i].position_y;
+					veinPartsInScene[i].position.z=veinParts[i].position_z;
+					veinPartsInScene[i].scale.x=veinParts[i].scale_x;
+					veinPartsInScene[i].scale.y=veinParts[i].scale_y;
+					veinPartsInScene[i].scale.z=veinParts[i].scale_z;
+					veinPartsInScene[i].rotation.x=veinParts[i].rotation_x;
+					veinPartsInScene[i].rotation.y=veinParts[i].rotation_y;
+					veinPartsInScene[i].rotation.z=veinParts[i].rotation_z;
+					veinPartsInScene[i].name=i;
+					veinPartsInScene[i].tag=veinParts[i].vein_part_name;						
+				}	
+				// merge_same_vein_parts(veinPartsInScene);
+				// createBonePartLinks(veinPartsInScene);
+			}
+		}
+
 	function animate() {
 		requestAnimationFrame( animate );
-		render();
+		if(control!=null) control.update();
+		// render();
 	}
 
 	function render() {
-		// stats.update();
+		stats.update();
 		renderer.render( scene, camera );
+	}
+
+	function  addStats () {
+		stats = new Stats();
+		stats.domElement.style.position = 'absolute';
+		stats.domElement.style.top = '70px';
+		stats.domElement.style.zIndex = 100;
+		viewBox.appendChild( stats.domElement );
+
 	}
 
 

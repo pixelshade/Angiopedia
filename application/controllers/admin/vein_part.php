@@ -46,15 +46,18 @@ class Vein_part extends Admin_Controller
 		$this->load->view('admin/vein_part/order_ajax', $this->data);
 	}
 
-	public function edit ($id = NULL)
+	public function edit ($id_vein = NULL, $id = NULL)
 	{
+		if($id_vein== NULL) redirect('admin/vein_part');
+
+		$this->data['vein'] = $this->vein_m->get_by('`id` = "'.$id_vein.'"',TRUE);
 		// Fetch a vein_part or set a new one
 		if ($id) {
 			$this->data['vein_part'] = $this->vein_part_m->get($id);
 			count($this->data['vein_part']) || $this->data['errors'][] = 'vein_part could not be found';
 		}
 		else {
-			$this->data['vein_part'] = $this->vein_part_m->get_new();
+			$this->data['vein_part'] = $this->vein_part_m->get_new($id_vein);
 		}
 		
 

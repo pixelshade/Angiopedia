@@ -1,13 +1,19 @@
+<!-- </div> -->
 <div>
+<?php
+var_dump($veinParts);
+?>
   <div id="viewBox">
     <script type="text/javascript">  
      <?php 
-     echo  "var veinJson = ".json_encode($vein). ";";
-     // echo  "var veinParts = ".json_encode($veinParts);
+     echo  "var veinJson = ".json_encode($vein). ";\n";
+     echo  "var veinPartsJson = ".json_encode($veinParts).";\n";
      ?>
    </script>
  </div>
 </div>
+<!-- <div class="container"> -->
+  
 
 <!-- <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#loading-modal">
   <i class="glyphicon glyphicon-play"></i> Start Processing

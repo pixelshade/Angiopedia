@@ -1,4 +1,8 @@
 <?php
+function btn($uri, $text){
+    return anchor($uri, $text  , 'class="btn btn-default"');
+}
+
 function btn_edit($uri){
  	return anchor($uri,' <span class="glyphicon glyphicon-edit"></span> Edit', 'class="btn btn-primary"');
 }

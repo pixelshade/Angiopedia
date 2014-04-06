@@ -1,5 +1,5 @@
 
-var camera, scene, renderer, control, viewBox, mainVein, activePart;
+var camera, scene, renderer, control, viewBox, mainVein;
 var viewBoxWidth, viewBoxHeight;
 var aspectRatio = 1.7;
 var folder = "../../../app_content/";
@@ -34,17 +34,19 @@ function init() {
 
 				setUpLightning();
 
+				loadModel(veinJson.model);
 				loadParts();
-				if(isEditingVein){
-					loadModel(veinJson.model, function(loadedMesh){
-					updateActiveModelWithFields(loadedMesh);	
-					activePart = loadedMesh;					
-					addControls(loadedMesh);	
-				});
-				 console.log("YESSSSS");
-				} else console.log("NOOOOOOOOOOO");
 
-
+				activePart = addPart();				
+				console.log(activePart);				
+				addControls(activePart);
+				    
+				if(isEditingVeinPart){
+				    console.log("editing part");
+				    updateActiveModelWithFields(activePart);				    
+				} else {
+					console.log("creating new part");					
+				}
 
 			
 
@@ -66,10 +68,10 @@ function init() {
 		}
 
 		function render() {
-				
-			if(activePart!=null){		
+				// console.log("render");
+			if(activePart!=null){
 				control.update();
-				updateFieldsWithActualItemData(activePart);				
+				updateFieldsWithActualItemData(activePart);
 			}
 			renderer.render( scene, camera );
 		}
@@ -79,8 +81,6 @@ function init() {
 			control = new THREE.TransformControls( camera, renderer.domElement );			
 			control.addEventListener( 'change', render );
 			control.attach( toModel );
-
-			console.log(toModel);
 			scene.add( control );	
 
 			window.addEventListener( 'keydown', function ( event ) {				
@@ -151,8 +151,7 @@ function init() {
 			$('[name="rotation_z"]').val(activeModel.rotation.z);
 		}
 
-
-	function updateActiveModelWithFields(activeModel){
+		function updateActiveModelWithFields(activeModel){
 			activeModel.position.x = $('[name="position_x"]').val();
 			activeModel.position.y = $('[name="position_y"]').val();
 			activeModel.position.z = $('[name="position_z"]').val();
@@ -165,21 +164,25 @@ function init() {
 		}
 
 
-		function loadModel(modelName, modelLoadedCallback ){
+
+		function loadModel(modelName){
 			if(modelName!=""){
 				var loader = new THREE.JSONLoader();
 
 				console.log("loading "+ folder+modelName);
 				loader.load( folder+modelName, function ( geometry ) {
 
-				geometry.computeVertexNormals();				
+				geometry.computeVertexNormals();
+				material = new THREE.MeshNormalMaterial( {color: 0x66CCFF , shading: THREE.SmoothShading});
+				// material = new THREE.MeshNormalMaterial( {color: 0x66CCFF });
+				mainVein = new THREE.Mesh( geometry, material ); 
 				// new THREE.MeshLambertMaterial( {color: 0xCC0000, shading: THREE.FlatShading, overdraw: true}) 				
-				material = new THREE.MeshNormalMaterial( {color: 0x66CCFF });
-				mesh = new THREE.Mesh( geometry, material ); 				
-		 		mesh.name="vein";
-		 		
-		 		scene.add( mesh );		 		 		
-		 		modelLoadedCallback(mesh);
+				// mainVein = new THREE.Mesh( geom, new THREE.MeshLambertMaterial( { color: 0xffffff, overdraw: true } ) );
+		 		mainVein.name="vein";		 		
+		 		scene.add( mainVein );		 		
+
+			  	setModelWithJsonParams(mainVein, veinJson);
+
 				render();
 		 	} );
 			
@@ -201,6 +204,15 @@ function init() {
 			
 			// camera.lookAt(activePart.position)		;
 			}
+		}
+
+		function addPart(){
+			var material = new THREE.MeshLambertMaterial( {color: 0xCC0000, shading: THREE.FlatShading, overdraw: true}) ;		
+
+			var geometry = new THREE.SphereGeometry(30, 16, 16);
+			mesh = new THREE.Mesh( geometry, material );
+			scene.add(mesh);
+			return mesh;			
 		}
 
 
@@ -267,13 +279,10 @@ function init() {
 
 		function updateModel(){
 			var selected = $('[name="model"]').val();
-			scene.remove(activePart);
+			scene.remove(mainVein);
 			removeControls();					
-			loadModel(selected,function(loadedMesh){
-				activePart = loadedMesh;
-				addControls(loadedMesh);
-			});			
-			render()
+			loadModel(selected);
+			render();
 		}
 
 		

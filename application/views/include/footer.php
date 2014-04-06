@@ -5,6 +5,8 @@
    <script src="<?php echo base_url('assets/js/custom.js') ?>"></script>
    <script src="<?php echo base_url('assets/js/three.min.js') ?>"></script>
    <script src="<?php echo base_url('assets/js/TransformControls.js') ?>"></script>
+   <script src="<?php echo base_url('assets/js/TrackballControls.js') ?>"></script>
+   <script src="<?php echo base_url('assets/js/stats.min.js') ?>"></script>
    <script src="<?php echo base_url('assets/js/ModelViewer.js') ?>"></script>
 </body>
 </html>

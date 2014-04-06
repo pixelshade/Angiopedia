@@ -25,8 +25,9 @@
 			<td><?php echo $vein->image; ?></td>
 			<td><?php echo $vein->info; ?></td>
 			<td><?php echo $vein->published; ?></td>
-		
-			<td><?php echo btn_edit('admin/vein/edit/' . $vein->id); ?></td>
+			<td>
+			<?php echo btn('admin/vein_part/edit/' . $vein->id,'Pridat cast'); ?>
+			<?php echo btn_edit('admin/vein/edit/' . $vein->id); ?></td>
 			<td><?php echo btn_delete('admin/vein/delete/' . $vein->id); ?></td>
 		</tr>
 <?php endforeach; ?>

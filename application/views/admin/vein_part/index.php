@@ -1,6 +1,7 @@
 <section>
 	<h2>Vein parts</h2>
-	<?php echo anchor('admin/vein_part/edit', '<i class="icon-plus"></i> Add a vein_part'); ?>
+	<?php 
+	// echo anchor('admin/vein_part/edit', '<i class="icon-plus"></i> Add a vein_part'); ?>
 	<table class="table table-striped">
 		<thead>
 			<tr>
