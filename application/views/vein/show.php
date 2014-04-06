@@ -1,8 +1,6 @@
 <!-- </div> -->
 <div>
-<?php
-var_dump($veinParts);
-?>
+<div id="infoBox" class="well"></div>
   <div id="viewBox">
     <script type="text/javascript">  
      <?php 

@@ -1,21 +1,29 @@
-
-var camera, scene, renderer, control, viewBox, mainVein, stats;
+var viewBox;
+var camera, scene, renderer, control, mainVein, stats, projector, Offset;
 var veinPartsInScene = [];
 var viewBoxWidth, viewBoxHeight;
+var mouse = { x: 0, y: 0 }, INTERSECTED;
+
+
+
+/* settings */
 var aspectRatio = 1.7;
 var folder = "../../../app_content/";
+var msgNotSelected = "Not selected";
+var showStats = false;
+
 
 init();
 animate();
 
 function init() {
-	
 
-
+				Offset = $('#viewBox').offset(); 
 				//set up width
 				viewBoxWidth = $("#viewBox").width();
 				viewBoxHeight = window.innerHeight-200;// viewBoxWidth / aspectRatio;
 
+				projector = new THREE.Projector();
 
 				renderer = new THREE.WebGLRenderer();
 				renderer.setClearColor( 0xffffff, 1 );
@@ -35,8 +43,9 @@ function init() {
 				setUpLightning();
 				loadParts(veinPartsJson);
 				loadModel(veinJson.model);
-				addStats();
-
+				if(showStats){
+					addStats();
+				}
 			// var texture = THREE.ImageUtils.loadTexture( 'textures/crate.gif', new THREE.UVMapping(), render );
 			// texture.anisotropy = renderer.getMaxAnisotropy();
 
@@ -99,7 +108,7 @@ function init() {
 				mainVein = new THREE.Mesh( geometry, material ); 
 				
 				
-		 		mainVein.name="vein";
+		 		mainVein.name="Vein";
 		 		scene.add( mainVein );		 	
 		 		activePart = mainVein;
 
@@ -210,7 +219,7 @@ function init() {
 
 
 	function loadParts(jsonArray){
-				var veinParts = jsonArray;
+				veinParts = jsonArray;
 				if(veinParts!=null){
 					for (var i = veinParts.length - 1; i >= 0; i--) {				
 						geometry = new THREE.SphereGeometry( 30, 16, 16);					
@@ -233,10 +242,10 @@ function init() {
 					veinPartsInScene[i].rotation.y=veinParts[i].rotation_y;
 					veinPartsInScene[i].rotation.z=veinParts[i].rotation_z;
 					veinPartsInScene[i].name=i;
-					veinPartsInScene[i].tag=veinParts[i].vein_part_name;						
+					veinPartsInScene[i].tag=veinParts[i].name;						
 				}	
-				// merge_same_vein_parts(veinPartsInScene);
-				// createBonePartLinks(veinPartsInScene);
+				merge_same_vein_parts(veinPartsInScene);
+				createVeinPartLinks(veinPartsInScene);
 			}
 		}
 
@@ -247,7 +256,7 @@ function init() {
 	}
 
 	function render() {
-		stats.update();
+		if(showStats) stats.update();
 		renderer.render( scene, camera );
 	}
 
@@ -259,6 +268,88 @@ function init() {
 		viewBox.appendChild( stats.domElement );
 
 	}
+
+	
+
+	$('#viewBox').mousemove(function(event){
+				event.preventDefault();	
+
+				mouse.x =  ( (event.pageX-Offset.left) / viewBoxWidth ) * 2 - 1;
+				mouse.y = - ( (event.pageY-Offset.top) / viewBoxHeight ) * 2 + 1;
+
+				var vector = new THREE.Vector3( mouse.x, mouse.y, 1 );
+				projector.unprojectVector( vector, camera );
+				
+				var raycaster = new THREE.Raycaster( camera.position, vector.sub( camera.position ).normalize() );
+
+				var intersects = raycaster.intersectObjects( veinPartsInScene );
+
+				if ( (intersects.length > 0)) {
+					if ( INTERSECTED != intersects[ 0 ].object) {
+						// if ( INTERSECTED ) INTERSECTED.material.emissive.setHex( INTERSECTED.currentHex );						
+						INTERSECTED = intersects[ 0 ].object;					
+						if(INTERSECTED.name=="Vein"){
+							$('#infoBox').html(msgNotSelected);
+							viewBox.style.cursor = 'auto';
+						} else {
+							$('#infoBox').html('<h4>'+veinParts[INTERSECTED.name].name+'</h4>'+veinParts[INTERSECTED.name].info);
+							viewBox.style.cursor = 'help';
+							setSameVeinPartsVisible(intersects[ 0 ].object.tag);
+						}
+						// INTERSECTED.currentHex = INTERSECTED.material.emissive.getHex();
+						// INTERSECTED.material.emissive.setHex( 0xff0000 );
+						// INTERSECTED.visible= true;	
+					} else {
+						//je vybrate to co bolo pred tym
+					}
+
+				} else {					
+					// if ( INTERSECTED ) INTERSECTED.material.emissive.setHex( INTERSECTED.currentHex );
+					// INTERSECTED.visible= false;
+					viewBox.style.cursor = 'auto';					
+					INTERSECTED = null;
+					$('#infoBox').html(msgNotSelected);
+				}
+
+			});
+
+			function merge_same_vein_parts(parts){					
+				function compare(a,b){
+					console.log(a);
+					return a.tag.localeCompare(b.tag);
+				}				
+				parts.sort(compare);
+				var prevPartTag = ""; 												 	
+				for (var i = parts.length - 1; i >= 0; i--) {				
+					if(prevPartTag==parts[i].tag){											
+					 	THREE.GeometryUtils.merge(parts[i].geometry, parts[i+1].geometry);					 	
+					}									 	
+					prevPartTag=parts[i].tag;
+				}				
+			};
+
+			function setSameVeinPartsVisible(selectedPartName){				
+				for (var i = veinPartsInScene.length - 1; i >= 0; i--) {
+					if(veinPartsInScene[i].tag==selectedPartName){
+						veinPartsInScene[i].visible=true;	
+					} else {
+						veinPartsInScene[i].visible=false;						
+					}
+					
+				};
+			}			
+
+			function createVeinPartLinks(orderedVeinParts){
+				var links ="";
+				var prevPartTag = ""; 			
+				for (var i = orderedVeinParts.length - 1; i >= 0; i--) {
+					if(prevPartTag!=orderedVeinParts[i].tag){
+						links += '<a href="#" onClick="setSameVeinPartsVisible(\''+orderedVeinParts[i].tag+'\')" title="'+orderedVeinParts[i].tag+'">'+orderedVeinParts[i].tag+'</a>,';
+					}
+					prevPartTag=orderedVeinParts[i].tag;
+				};
+				$('#veinParts small').html(links);
+			}
 
 
 
