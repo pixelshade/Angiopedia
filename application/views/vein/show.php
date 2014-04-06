@@ -1,6 +1,5 @@
 <!-- </div> -->
 <div>
-<div id="infoBox" class="well"></div>
   <div id="viewBox">
     <script type="text/javascript">  
      <?php 
@@ -9,9 +8,11 @@
      ?>
    </script>
  </div>
+ <div id="infoBox" class="well"></div>
+ <div id="veinParts"></div>
 </div>
 <!-- <div class="container"> -->
-  
+
 
 <!-- <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#loading-modal">
   <i class="glyphicon glyphicon-play"></i> Start Processing
@@ -30,10 +31,10 @@
     </div>
   </div>
 </div>
- -->
+-->
 
 
-
+<!-- 
 
 <div class="row">
   <div class="col-xs-6">
@@ -77,4 +78,4 @@
       <input type="range" name="range" min="1" max="100" value="50" onchange="rangeDanger.value=value">
       <output id="rangeDanger">50</output>
     </div>
-  </div> 
+  </div>  -->

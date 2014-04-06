@@ -11,7 +11,7 @@ var aspectRatio = 1.7;
 var folder = "../../../app_content/";
 var msgNotSelected = "Not selected";
 var showStats = false;
-
+var mouseIntersectDetectionEnabled = true;
 
 init();
 animate();
@@ -108,7 +108,7 @@ function init() {
 				mainVein = new THREE.Mesh( geometry, material ); 
 				
 				
-		 		mainVein.name="Vein";
+		 		mainVein.name="main_vein";
 		 		scene.add( mainVein );		 	
 		 		activePart = mainVein;
 
@@ -200,8 +200,6 @@ function init() {
 		}
 
 		function setModelWithJsonParams(model,jsonParams){
-			console.log(model);
-			console.log(jsonParams);
 			if(model!=null){
 				model.position.x = jsonParams.position_x;
 				model.position.y = jsonParams.position_y;
@@ -224,7 +222,7 @@ function init() {
 					for (var i = veinParts.length - 1; i >= 0; i--) {				
 						geometry = new THREE.SphereGeometry( 30, 16, 16);					
 
-						material = new THREE.MeshBasicMaterial({color:0x389CD1, transparent: true, opacity: 0.8});//THREE.MeshLambertMaterial( {color: 0x389CD1});// new THREE.MeshNormalMaterial();						
+						material = new THREE.MeshBasicMaterial({color:0xff99D1, transparent: true, opacity: 0.8});//THREE.MeshLambertMaterial( {color: 0x389CD1});// new THREE.MeshNormalMaterial();						
 
 						veinPartsInScene[i]= new THREE.Mesh(geometry,material);					
 						veinPartsInScene[i].visible = false;
@@ -269,10 +267,11 @@ function init() {
 
 	}
 
-	
+
 
 	$('#viewBox').mousemove(function(event){
-				event.preventDefault();	
+		if(mouseIntersectDetectionEnabled){
+				// event.preventDefault();	
 
 				mouse.x =  ( (event.pageX-Offset.left) / viewBoxWidth ) * 2 - 1;
 				mouse.y = - ( (event.pageY-Offset.top) / viewBoxHeight ) * 2 + 1;
@@ -283,12 +282,14 @@ function init() {
 				var raycaster = new THREE.Raycaster( camera.position, vector.sub( camera.position ).normalize() );
 
 				var intersects = raycaster.intersectObjects( veinPartsInScene );
-
 				if ( (intersects.length > 0)) {
 					if ( INTERSECTED != intersects[ 0 ].object) {
+						console.log(intersects);
 						// if ( INTERSECTED ) INTERSECTED.material.emissive.setHex( INTERSECTED.currentHex );						
-						INTERSECTED = intersects[ 0 ].object;					
-						if(INTERSECTED.name=="Vein"){
+						INTERSECTED = intersects[ 0 ].object;
+						console.log(INTERSECTED.name);
+
+						if(INTERSECTED.name=="main_vein"){
 							$('#infoBox').html(msgNotSelected);
 							viewBox.style.cursor = 'auto';
 						} else {
@@ -298,24 +299,24 @@ function init() {
 						}
 						// INTERSECTED.currentHex = INTERSECTED.material.emissive.getHex();
 						// INTERSECTED.material.emissive.setHex( 0xff0000 );
-						// INTERSECTED.visible= true;	
+						INTERSECTED.visible = true;	
 					} else {
 						//je vybrate to co bolo pred tym
 					}
 
 				} else {					
 					// if ( INTERSECTED ) INTERSECTED.material.emissive.setHex( INTERSECTED.currentHex );
-					// INTERSECTED.visible= false;
+					// INTERSECTED.visible = false;
 					viewBox.style.cursor = 'auto';					
 					INTERSECTED = null;
 					$('#infoBox').html(msgNotSelected);
 				}
 
-			});
+		}
+	});
 
 			function merge_same_vein_parts(parts){					
-				function compare(a,b){
-					console.log(a);
+				function compare(a,b){					
 					return a.tag.localeCompare(b.tag);
 				}				
 				parts.sort(compare);
@@ -328,8 +329,10 @@ function init() {
 				}				
 			};
 
-			function setSameVeinPartsVisible(selectedPartName){				
+			function setSameVeinPartsVisible(selectedPartName){		
 				for (var i = veinPartsInScene.length - 1; i >= 0; i--) {
+			console.log(veinPartsInScene[i].visible);
+					console.log(veinPartsInScene[i].tag + "=="+ selectedPartName);
 					if(veinPartsInScene[i].tag==selectedPartName){
 						veinPartsInScene[i].visible=true;	
 					} else {
@@ -348,7 +351,8 @@ function init() {
 					}
 					prevPartTag=orderedVeinParts[i].tag;
 				};
-				$('#veinParts small').html(links);
+				console.log(links);
+				$('#veinParts').html(links);
 			}
 
 
