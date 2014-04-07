@@ -32,7 +32,7 @@
 			<div class="col-sm-3 col-md-3 navbar-right">
 				<form class="navbar-form" role="search">
 					<div class="input-group">
-						<input type="text" class="form-control" placeholder="Search" name="q">
+						<input id="search" type="text" class="form-control" autocomplete="off" placeholder="Search" name="q">
 						<div class="input-group-btn">
 							<button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
 						</div>
@@ -43,9 +43,8 @@
 	</div>
 </div>
 <div class="container">
-
 	<?php $this->load->view($subview); ?>
-
+<script><?php echo "var vein_names = '". json_encode($vein_names)."'"; ?></script>
 
 </div> <!-- /.container -->
 <?php $this->load->view('include/footer.php');

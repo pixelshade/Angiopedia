@@ -135,4 +135,14 @@ class Vein_m extends MY_Model
 		$result = $empty + $result;		
 		return $result;
 	}
+
+
+	public function get_array_names(){
+		$this->db->select('name');		
+		$veins =  $this->db->get_where($this->_table_name, '`published` = "1"')->result_array();
+		$veins = array_column($veins,'name');
+		// dump($veins);
+		return $veins;
+		
+	}
 }

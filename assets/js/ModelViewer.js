@@ -9,8 +9,9 @@ var mouse = { x: 0, y: 0 }, INTERSECTED;
 /* settings */
 var aspectRatio = 1.7;
 var folder = "../../../app_content/";
-var msgNotSelected = "Not selected";
+var msgNotSelected = "";//"Not selected";
 var showStats = false;
+var showGrid = false;
 var mouseIntersectDetectionEnabled = true;
 
 init();
@@ -38,7 +39,7 @@ function init() {
 							
 
 				scene = new THREE.Scene();
-				scene.add( new THREE.GridHelper( 500, 100 ) );
+				if(showGrid) scene.add( new THREE.GridHelper( 500, 100 ) );
 
 				setUpLightning();
 				loadParts(veinPartsJson);
@@ -69,6 +70,7 @@ function init() {
 
 		function onWindowResize() {
 			control.handleResize();
+			Offset = $('#viewBox').offset();
 //set up width
 			viewBoxWidth = $("#viewBox").width();
 			viewBoxHeight = viewBoxWidth / aspectRatio;
@@ -286,9 +288,12 @@ function init() {
 					if ( INTERSECTED != intersects[ 0 ].object) {						
 						
 						INTERSECTED = intersects[ 0 ].object;											
-						$('#infoBox').html('<h4>'+veinParts[INTERSECTED.name].name+'</h4>'+veinParts[INTERSECTED.name].info);
+						$('#infoBox span').html('<hr><h4>'+veinParts[INTERSECTED.name].name+'</h4>'+veinParts[INTERSECTED.name].info);
 						viewBox.style.cursor = 'help';
-						setSameVeinPartsVisible(intersects[ 0 ].object.tag);						
+						setSameVeinPartsVisible(intersects[ 0 ].object.tag);	
+						  // $('#popover').css('left', mouse.x-(200)+'px');
+      		// 			  $('#popover').css('top', mouse.y-(100)+'px');		
+      		// 			  $('#popover').show();			
 						
 					} else {
 						//je vybrate to co bolo pred tym
@@ -300,7 +305,7 @@ function init() {
 					viewBox.style.cursor = 'auto';					
 					INTERSECTED = null;
 					setSameVeinPartsVisible("none");
-					$('#infoBox').html(msgNotSelected);
+					$('#infoBox span').html(msgNotSelected);
 				}
 
 		}

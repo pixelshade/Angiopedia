@@ -8,9 +8,26 @@
      ?>
    </script>
  </div>
- <div id="infoBox" class="well"></div>
+<div id="infoBox" class="panel panel-default">
+                <div class="panel-heading"><h1><?php echo $vein->name; ?></h1></div>
+                <div class="panel-body">
+                 <?php echo $vein->info; ?>
+                <span></span>
+                <hr>
+                <div id="veinParts"></div>
+                </div>
+              </div>
+
+
+<!--  <div id="infoBox" class="well">
+ <h1>
+  <?php //echo $vein->name; ?>
+ </h1>
+ <?php //echo $vein->info; ?>
+ <span></span>
+ </div>
  <div id="veinParts"></div>
-</div>
+</div> -->
 <!-- <div class="container"> -->
 
 
