@@ -12,8 +12,12 @@
  $page = $this->uri->segment(2);
  if($page=="show"){?>
 <script src="<?php echo base_url('assets/js/ModelViewer.js') ?>"></script>
+<?php 
+} 
+if($page=="tag"){?> 
+ <script src="<?php echo base_url('assets/js/TestModelViewer.js') ?>"></script>  
+
  <?php }  ?>
-   
 </body>
 </html>
 

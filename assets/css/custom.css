@@ -7,6 +7,15 @@ body {
 }
 
 /**
+donate_btn
+
+*/
+#donate_btn{
+    margin-top: 12px;
+    
+}
+
+/**
 Info dragable box
 */
 #infoBox{
