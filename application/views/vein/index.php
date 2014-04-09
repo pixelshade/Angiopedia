@@ -1,5 +1,5 @@
 <section>
-	<h2>Veins</h2>	
+	<h2>Arteries</h2>	
 	
 	<?php if(count($veins)): foreach($veins as $vein): ?>	
 		<!-- <div class="row"> -->

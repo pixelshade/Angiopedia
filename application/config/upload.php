@@ -10,4 +10,4 @@ $config['upload_path'] = '/tmp';
  * The allowed file types to be uploaded.
  * REQUIRED
  */ 
-$config['allowed_types'] = '';
+$config['allowed_types'] = 'js|png|jpg';

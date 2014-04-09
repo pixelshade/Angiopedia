@@ -144,20 +144,20 @@ function init() {
 			// light.position.set( 1, 1, 1 );
 			// scene.add( light );
 
-			var directionalLight = new THREE.DirectionalLight(0xffffff);
-			directionalLight.position.set(0, -1000, 1000).normalize();
+			var directionalLight = new THREE.DirectionalLight(0xffffff,0.2);
+			directionalLight.position.set(0, -2000, 2000).normalize();
 			scene.add(directionalLight);	
 
-			var directionalLight2 = new THREE.DirectionalLight(0xffffff);
-			directionalLight2.position.set(-1000,-1000, -1000).normalize();
+			var directionalLight2 = new THREE.DirectionalLight(0xffffff,0.2);
+			directionalLight2.position.set(-2000,-2000, -2000).normalize();
 			scene.add(directionalLight2);						
 
-			var directionalLight3 = new THREE.DirectionalLight(0xffffff);
-			directionalLight3.position.set(1000,1000, 1000).normalize();
+			var directionalLight3 = new THREE.DirectionalLight(0xffffff,0.9);
+			directionalLight3.position.set(2000,2000, 2000).normalize();
 			scene.add(directionalLight3);
 
-			var directionalLight4 = new THREE.DirectionalLight(0xffffff);
-			directionalLight4.position.set(-1000,1000, -1000).normalize();
+			var directionalLight4 = new THREE.DirectionalLight(0xffffff,0.8);
+			directionalLight4.position.set(-2000,2000, -2000).normalize();
 			scene.add(directionalLight4);
 		}
 
@@ -181,7 +181,7 @@ function init() {
 			return function ( geometry ) {				
 				geometry.computeVertexNormals();
 
-				var materialColor = (veinPartsJson[iterator]==undefined) ?  0x66CCFF : parseInt(veinPartsJson[iterator].color);
+				var materialColor = (veinPartsJson[iterator]==undefined) ?  0x636363 : parseInt(veinPartsJson[iterator].color);
 				material = new THREE.MeshLambertMaterial( {color: materialColor , shading: THREE.SmoothShading});
 				console.log(materialColor);
 				// material = new THREE.MeshNormalMaterial( {color: 0x66CCFF });
@@ -202,7 +202,7 @@ function init() {
 				if(iterator==undefined){					
 					loader.load( folder+modelName, function ( geometry ) {
 					geometry.computeVertexNormals();
-					var materialColor = (veinPartsJson[iterator]==undefined) ?  0x66CCFF : parseInt(veinPartsJson[iterator].color);
+					var materialColor = (veinPartsJson[iterator]==undefined) ?  0xE3E3E3 : parseInt(veinPartsJson[iterator].color);
 					console.log(materialColor);
 					material = new THREE.MeshLambertMaterial( {color: materialColor , shading: THREE.SmoothShading});
 					var mesh = new THREE.Mesh( geometry, material ); 					

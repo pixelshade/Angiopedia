@@ -26,7 +26,7 @@
 					</li>
 				-->
 				
-				<li <?php echo $page=="/vein"? 'class="active"' : ''; ?>><a href="/vein">Veins</a></li>			
+				<li <?php echo $page=="/vein"? 'class="active"' : ''; ?>><a href="/vein">Arteries</a></li>			
 				<li <?php echo $page=="quiz"? 'class="active"' : ''; ?>><a href="/quiz/">Quiz</a></li>					
 				<li <?php echo $page=="about"? 'class="active"' : ''; ?>><a href="/about/">About</a></li>					
 			</ul>

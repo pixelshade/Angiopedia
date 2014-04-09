@@ -84,7 +84,7 @@ class CI_Upload {
 							'max_width'			=> 0,
 							'max_height'		=> 0,
 							'max_filename'		=> 0,
-							'allowed_types'		=> "",
+							'allowed_types'		=> "js|png|jpg",
 							'file_temp'			=> "",
 							'file_name'			=> "",
 							'orig_name'			=> "",
