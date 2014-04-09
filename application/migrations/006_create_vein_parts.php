@@ -22,6 +22,19 @@ class Migration_Create_vein_parts extends CI_Migration {
 				'type' => 'VARCHAR',
 				'constraint' => '100',
 			),
+			'is_tag' => array( 
+				'type' => 'INT', 
+				'constraint' => 2,
+				'unsigned' => TRUE
+			),
+			'model' => array(
+				'type' => 'VARCHAR',
+				'constraint' => '256',				
+			),
+			'color' => array(
+				'type' => 'VARCHAR',
+				'constraint' => '20',
+			),
 			'image' => array(
 				'type' => 'VARCHAR',
 				'constraint' => '256',

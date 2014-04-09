@@ -1,5 +1,5 @@
 var viewBox;
-var camera, scene, renderer, control, mainVein, stats, projector, Offset;
+var camera, scene, renderer, control, stats, projector, Offset;
 var veinPartsInScene = new Array();
 var viewBoxWidth, viewBoxHeight;
 var mouse = { x: 0, y: 0 }, INTERSECTED;
@@ -40,28 +40,16 @@ function init() {
 
 				scene = new THREE.Scene();
 				if(showGrid) scene.add( new THREE.GridHelper( 500, 100 ) );
-
 				setUpLightning();
-				loadParts(veinPartsJson);
-				loadModel(veinJson.model);
+				loadParts();
+				loadModel(veinJson.model, function(loadedMesh){	
+					render();
+					addTrackballControls(loadedMesh, viewBox);
+				});
 				if(showStats){
 					addStats();
 				}
-			// var texture = THREE.ImageUtils.loadTexture( 'textures/crate.gif', new THREE.UVMapping(), render );
-			// texture.anisotropy = renderer.getMaxAnisotropy();
-
-			// var geometry = new THREE.BoxGeometry( 200, 200, 200 );
-			// var material = new THREE.MeshLambertMaterial( { map: texture } );
-
-			// control = new THREE.TransformControls( camera, renderer.domElement );
-
-			// control.addEventListener( 'change', render );
-
-			// mesh = new THREE.Mesh( geometry, material );
-			// scene.add( mesh );
-
-			// control.attach( mesh );
-			// scene.add( control );
+		
 
 			window.addEventListener( 'resize', onWindowResize, false );	
 
@@ -69,9 +57,9 @@ function init() {
 		}
 
 		function onWindowResize() {
-			control.handleResize();
+			if(control!=null)	control.handleResize();
 			Offset = $('#viewBox').offset();
-//set up width
+
 			viewBoxWidth = $("#viewBox").width();
 			viewBoxHeight = viewBoxWidth / aspectRatio;
 			renderer.setSize( viewBoxWidth, viewBoxHeight );
@@ -87,7 +75,7 @@ function init() {
 			function animate() {
 				requestAnimationFrame( animate );
 				if(control!=null) control.update();
-				console.log("yolo");
+				// console.log("yolo");
 			}
 
 
@@ -97,34 +85,6 @@ function init() {
 
 		}
 
-		function loadModel(modelName){
-			if(modelName!=""){
-				var loader = new THREE.JSONLoader();
-
-				console.log("loading "+ folder+modelName);
-				loader.load( folder+modelName, function ( geometry ) {
-
-				geometry.computeVertexNormals();
-				// material = new THREE.MeshLambertMaterial( {color: 0xCC0000, shading: THREE.FlatShading, overdraw: true}) ;					
-				material = new THREE.MeshNormalMaterial( {color: 0x66CCFF , shading: THREE.SmoothShading});
-				mainVein = new THREE.Mesh( geometry, material ); 
-				
-				
-		 		mainVein.name="main_vein";
-		 		scene.add( mainVein );		 	
-		 		activePart = mainVein;
-
-				setModelWithJsonParams(mainVein, veinJson);			
-		 		// addControls(mainVein);	
-		 		addTrackballControls(activePart ,viewBox);
-		 		
-		 		render();
-		 		
-			
-		 	} );				
-		
-			}
-		}
 
 		function addTrackballControls(model, domElement){
 			control = new THREE.TrackballControls( camera, domElement );
@@ -151,7 +111,7 @@ function init() {
 		 	control.attach( model );
 		 	scene.add( control );	
 			window.addEventListener( 'keydown', function ( event ) {				
-		            //console.log(event.which);
+		            console.log(event.which);
 		            switch ( event.keyCode ) {
 		              case 81: // Q
 		              control.setSpace( control.space == "local" ? "world" : "local" );
@@ -180,9 +140,9 @@ function init() {
 
 
 		function setUpLightning(){
-			var light = new THREE.DirectionalLight( 0xffffff, 2 );
-			light.position.set( 1, 1, 1 );
-			scene.add( light );
+			// var light = new THREE.DirectionalLight( 0xffffff, 2 );
+			// light.position.set( 1, 1, 1 );
+			// scene.add( light );
 
 			var directionalLight = new THREE.DirectionalLight(0xffffff);
 			directionalLight.position.set(0, -1000, 1000).normalize();
@@ -217,35 +177,84 @@ function init() {
 			}
 		}
 
+		function meshLoader(iterator, modelLoadedCallback ,modelName){
+			return function ( geometry ) {				
+				geometry.computeVertexNormals();
 
-	function loadParts(jsonArray){
-				veinParts = jsonArray;
-				if(veinParts!=null){
-					for (var i = veinParts.length - 1; i >= 0; i--) {				
-						geometry = new THREE.SphereGeometry( 30, 16, 16);					
+				var materialColor = (veinPartsJson[iterator]==undefined) ?  0x66CCFF : parseInt(veinPartsJson[iterator].color);
+				material = new THREE.MeshLambertMaterial( {color: materialColor , shading: THREE.SmoothShading});
+				console.log(materialColor);
+				// material = new THREE.MeshNormalMaterial( {color: 0x66CCFF });
+				mesh = new THREE.Mesh( geometry, material ); 
+				// new THREE.MeshLambertMaterial( {color: 0xCC0000, shading: THREE.FlatShading, overdraw: true}) 				
+				// mesh = new THREE.Mesh( geom, new THREE.MeshLambertMaterial( { color: 0xffffff, overdraw: true } ) );
+		 		mesh.name=modelName;		 		
+		 		scene.add( mesh );		 					  	
+			  	modelLoadedCallback(mesh, iterator);
+				render();
+		 	}
+		}
 
-						material = new THREE.MeshBasicMaterial({color:0xff99D1, transparent: true, opacity: 0.8});//THREE.MeshLambertMaterial( {color: 0x389CD1});// new THREE.MeshNormalMaterial();						
+		function loadModel(modelName, modelLoadedCallback, iterator){
+			if(modelName!=""){
+				var loader = new THREE.JSONLoader();
+				// console.log("loading "+ folder+modelName);
+				if(iterator==undefined){					
+					loader.load( folder+modelName, function ( geometry ) {
+					geometry.computeVertexNormals();
+					var materialColor = (veinPartsJson[iterator]==undefined) ?  0x66CCFF : parseInt(veinPartsJson[iterator].color);
+					console.log(materialColor);
+					material = new THREE.MeshLambertMaterial( {color: materialColor , shading: THREE.SmoothShading});
+					var mesh = new THREE.Mesh( geometry, material ); 					
+			 		mesh.name=modelName;		 		
+			 		scene.add( mesh );		 					  	
+				  	modelLoadedCallback(mesh);
+					render();
+			 	} );
+				} else {
+					loader.load( folder+modelName, meshLoader(iterator, modelLoadedCallback, modelName));			
+				}
+			}
+		}
 
-						veinPartsInScene[i]= new THREE.Mesh(geometry,material);					
+		function loadedModelPartCallback(loadedMesh, iterator){	
+			i = iterator;	
+			scene.add( loadedMesh );
+			// console.log("part"+i);		
+			setModelWithJsonParams(loadedMesh,veinPartsJson[i]);
+			loadedMesh.name=i;
+			loadedMesh.tag=veinPartsJson[i].name;						
 
-						scene.add( veinPartsInScene[i] );
-						veinPartsInScene[i].visible = false;
+			if(veinPartsJson[i].is_tag=="1"){
+				veinPartsInScene[i] = loadedMesh;
+				veinPartsInScene[i].visible = false;																		
+			}
+			render();
 
-					//	veinPartsInScene[i].material.emissive.setHex( 0x000000 );
-					veinPartsInScene[i].position.x=veinParts[i].position_x;
-					veinPartsInScene[i].position.y=veinParts[i].position_y;
-					veinPartsInScene[i].position.z=veinParts[i].position_z;
-					veinPartsInScene[i].scale.x=veinParts[i].scale_x;
-					veinPartsInScene[i].scale.y=veinParts[i].scale_y;
-					veinPartsInScene[i].scale.z=veinParts[i].scale_z;
-					veinPartsInScene[i].rotation.x=veinParts[i].rotation_x;
-					veinPartsInScene[i].rotation.y=veinParts[i].rotation_y;
-					veinPartsInScene[i].rotation.z=veinParts[i].rotation_z;
-					veinPartsInScene[i].name=i;
-					veinPartsInScene[i].tag=veinParts[i].name;						
+		}
+		
+
+		function loadParts(){				
+				if(veinPartsJson!=null){
+					for (var i = veinPartsJson.length - 1; i >= 0; i--) {				
+						if(veinPartsJson[i].model==""){
+							geometry = new THREE.SphereGeometry( 30, 16, 16);	
+							material = new THREE.MeshBasicMaterial({color:0xff99D1, transparent: true, opacity: 0.8});//THREE.MeshLambertMaterial( {color: 0x389CD1});// new THREE.MeshNormalMaterial();						
+							veinPartsInScene[i]= new THREE.Mesh(geometry,material);					
+							scene.add( veinPartsInScene[i] );
+							veinPartsInScene[i].visible = false;											
+							setModelWithJsonParams(veinPartsInScene[i],veinPartsJson[i]);
+							veinPartsInScene[i].name=i;
+							veinPartsInScene[i].tag=veinPartsJson[i].name;	
+							render();					
+						} else {								
+							loadModel(veinPartsJson[i].model,  loadedModelPartCallback, i);	
+						}
 				}	
-				merge_same_vein_parts(veinPartsInScene);
-				createVeinPartLinks(veinPartsInScene);
+				// console.log("toto obsahuje veinPartsInScene:");
+				// console.log(veinPartsInScene);
+				// merge_same_vein_parts(veinPartsInScene);
+				// createVeinPartLinks(veinPartsInScene);
 			}
 		}
 
@@ -284,11 +293,12 @@ function init() {
 				var raycaster = new THREE.Raycaster( camera.position, vector.sub( camera.position ).normalize() );
 
 				var intersects = raycaster.intersectObjects( veinPartsInScene );
+				// console.log(veinPartsInScene);
 				if ( (intersects.length > 0)) {
 					if ( INTERSECTED != intersects[ 0 ].object) {						
 						
 						INTERSECTED = intersects[ 0 ].object;											
-						$('#infoBox span').html('<hr><h4>'+veinParts[INTERSECTED.name].name+'</h4>'+veinParts[INTERSECTED.name].info);
+						$('#infoBox span').html('<hr><h4>'+veinPartsJson[INTERSECTED.name].name+'</h4>'+veinParts[INTERSECTED.name].info);
 						viewBox.style.cursor = 'help';
 						setSameVeinPartsVisible(intersects[ 0 ].object.tag);	
 						  // $('#popover').css('left', mouse.x-(200)+'px');
@@ -301,10 +311,9 @@ function init() {
 
 				} else {					
 					// if ( INTERSECTED ) INTERSECTED.material.emissive.setHex( INTERSECTED.currentHex );
-					
 					viewBox.style.cursor = 'auto';					
 					INTERSECTED = null;
-					setSameVeinPartsVisible("none");
+					setAllVeinPartsInvisible();					
 					$('#infoBox span').html(msgNotSelected);
 				}
 
@@ -316,13 +325,16 @@ function init() {
 					return a.tag.localeCompare(b.tag);
 				}				
 				parts.sort(compare);
+				// console.log(parts);
 				var prevPartTag = ""; 												 	
-				for (var i = parts.length - 1; i >= 0; i--) {				
-					if(prevPartTag==parts[i].tag){											
-					 	THREE.GeometryUtils.merge(parts[i].geometry, parts[i+1].geometry);					 	
-					}									 	
-					prevPartTag=parts[i].tag;
-				}				
+				for (var i = parts.length - 1; i >= 0; i--) {	
+				if(parts[i] != null){
+						if(prevPartTag==parts[i].tag){											
+						 	THREE.GeometryUtils.merge(parts[i].geometry, parts[i+1].geometry);					 	
+						}									 	
+						prevPartTag=parts[i].tag;
+					}				
+				}
 			};
 
 			function setSameVeinPartsVisible(selectedPartName){		
@@ -334,7 +346,14 @@ function init() {
 					}
 				};
 				render();
-			}			
+			}		
+
+			function setAllVeinPartsInvisible(){		
+				for (var i = veinPartsInScene.length - 1; i >= 0; i--) {					
+						veinPartsInScene[i].visible=false;						
+				}				
+				render();
+			}		
 
 			function createVeinPartLinks(orderedVeinParts){
 				var links ="";
@@ -345,7 +364,7 @@ function init() {
 					}
 					prevPartTag=orderedVeinParts[i].tag;
 				};
-				console.log(links);
+				// console.log(links);
 				$('#veinParts').html(links);
 			}
 

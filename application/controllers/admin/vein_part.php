@@ -11,8 +11,8 @@ class Vein_part extends Admin_Controller
 
 		// Vein_partss for dropdown
 		$this->data['veins'] = $this->vein_m->get_for_dropdown();
-		$this->data['images'] = $this->content_files_model->get_for_dropdown();
-		$this->data['models'] = $this->content_files_model->get_for_dropdown();
+		$this->data['images'] = $this->content_files_model->get_images_for_dropdown();
+		$this->data['models'] = $this->content_files_model->get_models_for_dropdown();
 	}
 
 	public function index ()
@@ -70,7 +70,10 @@ class Vein_part extends Admin_Controller
 		if ($this->form_validation->run() == TRUE) {
 			$data = $this->vein_part_m->array_from_post(array(
 				'vein_id', 
-				'name', 								 
+				'name', 
+				'model',
+				'color',
+				'is_tag',
 				'image',
 				'info',
 				'scale_x',
@@ -83,6 +86,7 @@ class Vein_part extends Admin_Controller
 				'position_y',
 				'position_z',
 				));
+			$data['color'] = str_replace("#", "0x", $data['color']);
 			$this->vein_part_m->save($data, $id);
 			redirect('admin/vein_part');
 		}

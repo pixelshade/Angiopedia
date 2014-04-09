@@ -8,6 +8,8 @@
 				<th>vein</th>
 				<th>name</th>				
 				<th>image</th>
+				<th>color</th>
+				<th>model</th>
 				<th>info</th>
 				<th>scale_x</th>
 				<th>scale_y</th>
@@ -28,6 +30,8 @@
 					<td><?php echo anchor('admin/vein_part/edit/' . $vein_part->id, $vein_part->name); ?></td>
 					<td><?php echo $veins[$vein_part->vein_id]; ?></td>
 					<td><?php echo $vein_part->image; ?></td>
+					<td><?php echo $vein_part->color; ?></td>
+					<td><?php echo $vein_part->model; ?></td>
 					<td><?php echo $vein_part->info; ?></td>
 					<td><?php echo $vein_part->scale_x; ?></td>
 					<td><?php echo $vein_part->scale_y; ?></td>

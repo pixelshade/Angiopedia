@@ -40,9 +40,8 @@ function init() {
 					updateActiveModelWithFields(loadedMesh);	
 					activePart = loadedMesh;					
 					addControls(loadedMesh);	
-				});
-				 console.log("YESSSSS");
-				} else console.log("NOOOOOOOOOOO");
+				});				
+				} 
 
 
 

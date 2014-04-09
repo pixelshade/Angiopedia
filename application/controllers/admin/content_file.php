@@ -52,8 +52,8 @@ class Content_file extends Admin_Controller
         else
         {
             $config['upload_path'] = $this->data['content_dir'];//$this->content_files_model->upload_path;
-            $config['allowed_types'] = 'gif|jpg|png';
-            $config['max_size'] = 1024 * 8;
+            $config['allowed_types'] = 'gif|jpg|png|js';
+            $config['max_size'] = 1024 * 8 * 8;
            // $config['encrypt_name'] = TRUE;
 
             $this->load->library('upload', $config);

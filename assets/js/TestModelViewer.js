@@ -226,15 +226,26 @@ function init() {
 	function loadParts(jsonArray){
 				veinParts = jsonArray;
 				if(veinParts!=null){
-					for (var i = veinParts.length - 1; i >= 0; i--) {				
-						geometry = new THREE.SphereGeometry( 30, 16, 16);					
+					for (var i = veinParts.length - 1; i >= 0; i--) {	
+					if(veinParts[i].model == ""){
 
-						material = new THREE.MeshBasicMaterial({color:0xff99D1, transparent: true, opacity: 0.8});//THREE.MeshLambertMaterial( {color: 0x389CD1});// new THREE.MeshNormalMaterial();						
+											geometry = new THREE.SphereGeometry( 30, 16, 16);					
+					} else {	
+						
+									var loader = new THREE.JSONLoader();				
+									loader.load( folder+modelName, function ( geometry ) {
+									geometry.computeVertexNormals();				
+							 		
+							 	} );				
+							
+					}
+					}
+					material = new THREE.MeshBasicMaterial({color:0xff99D1, transparent: true, opacity: 0.8});//THREE.MeshLambertMaterial( {color: 0x389CD1});// new THREE.MeshNormalMaterial();						
 
-						veinPartsInScene[i]= new THREE.Mesh(geometry,material);					
+					veinPartsInScene[i]= new THREE.Mesh(geometry,material);					
 
-						scene.add( veinPartsInScene[i] );
-						veinPartsInScene[i].visible = false;
+					scene.add( veinPartsInScene[i] );
+					veinPartsInScene[i].visible = false;
 					
 					veinPartsInScene[i].position.x=veinParts[i].position_x;
 					veinPartsInScene[i].position.y=veinParts[i].position_y;

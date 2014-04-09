@@ -12,6 +12,7 @@
 	<link href="<?php echo base_url('assets/css/bootstrap.min.css') ?>" rel="stylesheet">
 	<link href="<?php echo base_url('assets/css/font-awesome.css') ?>" rel="stylesheet">
 	<link href="<?php echo base_url('assets/css/custom.css') ?>" rel="stylesheet">
+	<link href="<?php echo base_url('assets/css/bootstrap-colorpicker.min.css') ?>" rel="stylesheet">
 	<script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
 	<script>
 		tinymce.init({selector:'.tinymce'});

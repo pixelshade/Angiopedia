@@ -20,10 +20,23 @@
 	<tr>
 		<td>Name</td>
 		<td><?php echo form_input('name', set_value('name', $vein_part->name),'class="form-control"'); ?></td>
+	</tr>	
+	<tr>	
+		<td>Model</td>
+		<td><?php echo form_dropdown('model', $models, $this->input->post('model') ? $this->input->post('model') : $vein_part->model); ?></td>
 	</tr>
 	<tr>	
 		<td>Image</td>
 		<td><?php echo form_dropdown('image', $images, $this->input->post('image') ? $this->input->post('image') : $vein_part->image); ?></td>
+	</tr>
+	<tr>	
+		<td>Je to tag? (schovavajuci sa podla mysky)</td>
+		<td><?php echo form_boolean_dropdown('is_tag', $this->input->post('model') ? $this->input->post('model') : $vein_part->model); ?></td>
+	</tr>
+	<tr>	
+		<td>Color</td>
+		<td><?php echo form_input('color', set_value('color', $vein_part->color), 'class="form-control"'); ?>
+		</td>
 	</tr>
 	<tr>	
 		<td>Info</td>

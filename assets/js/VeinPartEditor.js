@@ -34,18 +34,20 @@ function init() {
 
 				setUpLightning();
 
-				loadModel(veinJson.model);
+				loadModel(veinJson.model, function(loadedMesh){
+					setModelWithJsonParams(loadedMesh, veinJson);
+				});
 				loadParts();
 
 				activePart = addPart();				
-				console.log(activePart);				
+				// console.log(activePart);				
 				addControls(activePart);
 				    
 				if(isEditingVeinPart){
-				    console.log("editing part");
+				    // console.log("editing part");
 				    updateActiveModelWithFields(activePart);				    
 				} else {
-					console.log("creating new part");					
+					// console.log("creating new part");					
 				}
 
 			
@@ -68,8 +70,8 @@ function init() {
 		}
 
 		function render() {
-				// console.log("render");
-			if(activePart!=null){
+				console.log("render");
+			if(activePart!=null && control!=null){
 				control.update();
 				updateFieldsWithActualItemData(activePart);
 			}
@@ -83,8 +85,9 @@ function init() {
 			control.attach( toModel );
 			scene.add( control );	
 
-			window.addEventListener( 'keydown', function ( event ) {				
-		            //console.log(event.which);
+			window.addEventListener( 'keydown', function ( event ) {
+			if(control!=null){
+		            console.log(event.which);
 		            switch ( event.keyCode ) {
 		              case 81: // Q
 		              control.setSpace( control.space == "local" ? "world" : "local" );
@@ -108,11 +111,13 @@ function init() {
 					control.setSize( Math.max(control.size - 0.1, 0.1 ) );
 					break;
 				}            
-			});        		
+			}      		
+			});  
 		}
 
 		function removeControls(){
-			scene.remove(control);				
+			scene.remove(control);	
+			control = null;			
 		}
 
 
@@ -165,44 +170,25 @@ function init() {
 
 
 
-		function loadModel(modelName){
+		function loadModel(modelName, modelLoadedCallback){
 			if(modelName!=""){
 				var loader = new THREE.JSONLoader();
 
-				console.log("loading "+ folder+modelName);
+				// console.log("loading "+ folder+modelName);
 				loader.load( folder+modelName, function ( geometry ) {
 
 				geometry.computeVertexNormals();
 				material = new THREE.MeshNormalMaterial( {color: 0x66CCFF , shading: THREE.SmoothShading});
 				// material = new THREE.MeshNormalMaterial( {color: 0x66CCFF });
-				mainVein = new THREE.Mesh( geometry, material ); 
+				var mesh = new THREE.Mesh( geometry, material ); 
 				// new THREE.MeshLambertMaterial( {color: 0xCC0000, shading: THREE.FlatShading, overdraw: true}) 				
-				// mainVein = new THREE.Mesh( geom, new THREE.MeshLambertMaterial( { color: 0xffffff, overdraw: true } ) );
-		 		mainVein.name="vein";		 		
-		 		scene.add( mainVein );		 		
-
-			  	setModelWithJsonParams(mainVein, veinJson);
-
+				// mesh = new THREE.Mesh( geom, new THREE.MeshLambertMaterial( { color: 0xffffff, overdraw: true } ) );
+		 		mesh.name=modelName;		 		
+		 		scene.add( mesh );		 					  	
+			  	modelLoadedCallback(mesh);
 				render();
-		 	} );
-			
+		 	} );			
 
-			// 	var texture = THREE.ImageUtils.loadTexture( 'textures/crate.gif', new THREE.UVMapping(), render );
-			// texture.anisotropy = renderer.getMaxAnisotropy();
-
-		
-			// var material = new THREE.MeshLambertMaterial( { map: texture } );
-
-			
-
-			// mainVein = new THREE.Mesh( geometry, material );
-			// scene.add( mainVein );
-
-			
-			// activePart = mainVein;
-			// addControls(activePart);
-			
-			// camera.lookAt(activePart.position)		;
 			}
 		}
 
@@ -217,8 +203,8 @@ function init() {
 
 
 		function setModelWithJsonParams(model,jsonParams){
-			console.log(model);
-			console.log(jsonParams);
+			// console.log(model);
+			// console.log(jsonParams);
 			if(model!=null){
 				model.position.x = jsonParams.position_x;
 				model.position.y = jsonParams.position_y;
@@ -279,9 +265,18 @@ function init() {
 
 		function updateModel(){
 			var selected = $('[name="model"]').val();
-			scene.remove(mainVein);
-			removeControls();					
-			loadModel(selected);
+			removeControls();	
+			scene.remove(activePart);
+			if(selected == ""){
+				activePart = addPart();
+				addControls(activePart);
+			} else {
+				loadModel(selected, function(loadedMesh){
+					activePart = loadedMesh;			
+					addControls(activePart);				
+					render();
+				});
+			}			
 			render();
 		}
 

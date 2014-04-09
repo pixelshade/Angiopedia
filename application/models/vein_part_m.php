@@ -19,6 +19,21 @@ class Vein_part_m extends MY_Model
 			'label' => 'image', 
 			'rules' => 'trim'
 			),
+		'model' => array(
+			'field' => 'model', 
+			'label' => 'model', 
+			'rules' => 'trim'
+			),
+		'color' => array(
+			'field' => 'color', 
+			'label' => 'color', 
+			'rules' => 'trim'
+			),
+		'is_tag' => array(
+			'field' => 'is_tag', 
+			'label' => 'is_tag', 
+			'rules' => 'intval|trim'
+			),
 		'info' => array(
 			'field' => 'info', 
 			'label' => 'Info', 
@@ -76,6 +91,9 @@ public function get_new ($vein_id)
 	$vein = new stdClass();
 	$vein->vein_id = $vein_id;
 	$vein->name = '';
+	$vein->model = '';
+	$vein->color = '';
+	$vein->is_tag = 0;
 	$vein->info = '';		
 	$vein->image = '';
 	$vein->scale_x = '1';

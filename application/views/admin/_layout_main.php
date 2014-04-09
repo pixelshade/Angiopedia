@@ -18,7 +18,7 @@
 				<li <?php echo $page=="user"? 'class="active"' : ''; ?>><a href="/admin/user">Users</a></li>	
 
 				<li class="<?php echo $page=="page"? 'active ' : ''; ?>dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Game content <b class="caret"></b></a>
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Content <b class="caret"></b></a>
 					<ul class="dropdown-menu">
 						<li><a href="/admin/category">Categories</a></li>
 						<li><a href="/admin/vein">Veins</a></li>							
