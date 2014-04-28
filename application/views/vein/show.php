@@ -9,16 +9,18 @@
    </script>
  </div>
 <div id="infoBox" class="panel panel-default">
-                <div class="panel-heading"><h1><?php echo $vein->name; ?></h1></div>
+                <div class="panel-heading"><h1><?php echo $vein->name; ?></h1>
+                 <br>
+                <?php
+                echo '<a href="/quiz/tag/'.$vein->name.'" class="btn btn-primary">Test</a>';                
+                ?>
+                </div>
                 <div class="panel-body">
                  <?php echo $vein->info; ?>
                 <span></span>
                 <hr>
                 <div id="veinParts"></div>
-                <br>
-                <?php
-                echo '<a href="/quiz/tag/'.$vein->name.'" class="btn btn-primary">Test</a>';                
-                ?>
+               
                 </div>
               </div>
 

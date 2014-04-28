@@ -364,7 +364,7 @@ function init() {
 				var prevPartTag = ""; 			
 				for (var i = orderedVeinParts.length - 1; i >= 0; i--) {
 					if(prevPartTag!=orderedVeinParts[i].tag){
-						links += '<a href="#" onClick="setSameVeinPartsVisible(\''+orderedVeinParts[i].tag+'\')" title="'+orderedVeinParts[i].tag+'">'+orderedVeinParts[i].tag+'</a>,';
+						links += '<a href="#" class="label label-info" onClick="setSameVeinPartsVisible(\''+orderedVeinParts[i].tag+'\')" title="'+orderedVeinParts[i].tag+'">'+orderedVeinParts[i].tag+'</a> ';
 					}
 					prevPartTag=orderedVeinParts[i].tag;
 				};

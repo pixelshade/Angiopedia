@@ -398,7 +398,7 @@ $("#userTagName").change(function(event){
 				var prevPartTag = ""; 			
 				for (var i = parts.length - 1; i >= 0; i--) {
 					if(prevPartTag!=parts[i]){
-						links += '<a href="#" onClick="setSameVeinPartsVisible(\''+parts[i]+'\')" title="'+parts[i]+'">'+parts[i]+'</a>,';
+						links += '<a href="#" class="label label-success" onClick="setSameVeinPartsVisible(\''+parts[i]+'\')" title="'+parts[i]+'">'+parts[i]+'</a> ';
 					}
 					prevPartTag=parts[i].tag;
 				};
