@@ -226,11 +226,13 @@ function init() {
 			loadedMesh.tag=veinPartsJson[i].name;						
 
 			if(veinPartsJson[i].is_tag=="1"){
-				veinPartsInScene[i] = loadedMesh;
-				veinPartsInScene[i].visible = false;																		
+				loadedMesh.visible = false;																		
+				veinPartsInScene.push(loadedMesh);
 			}
-			render();
+			merge_same_vein_parts(veinPartsInScene);
+			createVeinPartLinks(veinPartsInScene);
 
+			render();
 		}
 		
 
@@ -240,21 +242,23 @@ function init() {
 						if(veinPartsJson[i].model==""){
 							geometry = new THREE.SphereGeometry( 30, 16, 16);	
 							material = new THREE.MeshBasicMaterial({color:0xff99D1, transparent: true, opacity: 0.8});//THREE.MeshLambertMaterial( {color: 0x389CD1});// new THREE.MeshNormalMaterial();						
-							veinPartsInScene[i]= new THREE.Mesh(geometry,material);					
-							scene.add( veinPartsInScene[i] );
-							veinPartsInScene[i].visible = false;											
-							setModelWithJsonParams(veinPartsInScene[i],veinPartsJson[i]);
-							veinPartsInScene[i].name=i;
-							veinPartsInScene[i].tag=veinPartsJson[i].name;	
+							loadedMesh = new THREE.Mesh(geometry,material);					
+							scene.add( loadedMesh );
+							loadedMesh.visible = false;											
+							setModelWithJsonParams(loadedMesh,veinPartsJson[i]);
+							loadedMesh.name=i;
+							loadedMesh.tag=veinPartsJson[i].name;	
+							if(veinPartsJson[i].is_tag=="1"){
+								loadedMesh.visible = false;																		
+								veinPartsInScene.push(loadedMesh);
+							}
 							render();					
 						} else {								
 							loadModel(veinPartsJson[i].model,  loadedModelPartCallback, i);	
 						}
-				}	
-				// console.log("toto obsahuje veinPartsInScene:");
-				// console.log(veinPartsInScene);
-				// merge_same_vein_parts(veinPartsInScene);
-				// createVeinPartLinks(veinPartsInScene);
+				}				
+				 merge_same_vein_parts(veinPartsInScene);
+				 createVeinPartLinks(veinPartsInScene);
 			}
 		}
 
@@ -298,7 +302,7 @@ function init() {
 					if ( INTERSECTED != intersects[ 0 ].object) {						
 						
 						INTERSECTED = intersects[ 0 ].object;											
-						$('#infoBox span').html('<hr><h4>'+veinPartsJson[INTERSECTED.name].name+'</h4>'+veinParts[INTERSECTED.name].info);
+						$('#infoBox span').html('<hr><h4>'+veinPartsJson[INTERSECTED.name].name+'</h4>'+veinPartsJson[INTERSECTED.name].info);
 						viewBox.style.cursor = 'help';
 						setSameVeinPartsVisible(intersects[ 0 ].object.tag);	
 						  // $('#popover').css('left', mouse.x-(200)+'px');
@@ -348,7 +352,7 @@ function init() {
 				render();
 			}		
 
-			function setAllVeinPartsInvisible(){		
+			function setAllVeinPartsInvisible(){
 				for (var i = veinPartsInScene.length - 1; i >= 0; i--) {					
 						veinPartsInScene[i].visible=false;						
 				}				

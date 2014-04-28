@@ -15,6 +15,10 @@
                 <span></span>
                 <hr>
                 <div id="veinParts"></div>
+                <br>
+                <?php
+                echo '<a href="/quiz/tag/'.$vein->name.'" class="btn btn-primary">Test</a>';                
+                ?>
                 </div>
               </div>
 

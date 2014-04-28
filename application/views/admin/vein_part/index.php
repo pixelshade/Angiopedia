@@ -11,7 +11,8 @@
 				<th>color</th>
 				<th>model</th>
 				<th>info</th>
-				<th>scale_x</th>
+				<th>is it a tag?</th>
+				<!-- <th>scale_x</th>
 				<th>scale_y</th>
 				<th>scale_z</th>
 				<th>rotation_x</th>
@@ -19,7 +20,7 @@
 				<th>rotation_z</th>
 				<th>position_x</th>
 				<th>position_y</th>
-				<th>position_z</th>
+				<th>position_z</th> -->
 				<th>Edit</th>
 				<th>Delete</th>
 			</tr>
@@ -33,7 +34,8 @@
 					<td><?php echo $vein_part->color; ?></td>
 					<td><?php echo $vein_part->model; ?></td>
 					<td><?php echo $vein_part->info; ?></td>
-					<td><?php echo $vein_part->scale_x; ?></td>
+					<td><?php echo $vein_part->is_tag; ?></td>
+				<!-- 	<td><?php echo $vein_part->scale_x; ?></td>
 					<td><?php echo $vein_part->scale_y; ?></td>
 					<td><?php echo $vein_part->scale_z; ?></td>
 					<td><?php echo $vein_part->rotation_x; ?></td>
@@ -41,7 +43,7 @@
 					<td><?php echo $vein_part->rotation_z; ?></td>
 					<td><?php echo $vein_part->position_x; ?></td>
 					<td><?php echo $vein_part->position_y; ?></td>
-					<td><?php echo $vein_part->position_z; ?></td>
+					<td><?php echo $vein_part->position_z; ?></td> -->
 					<td><?php echo btn_edit('admin/vein_part/edit/' . $vein_part->id); ?></td>
 					<td><?php echo btn_delete('admin/vein_part/delete/' . $vein_part->id); ?></td>
 				</tr>
