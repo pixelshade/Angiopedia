@@ -229,8 +229,7 @@ function init() {
 				loadedMesh.visible = false;																		
 				veinPartsInScene.push(loadedMesh);
 			}
-			merge_same_vein_parts(veinPartsInScene);
-			createVeinPartLinks(veinPartsInScene);
+			merge_same_vein_parts(veinPartsInScene);		
 
 			render();
 		}
@@ -258,7 +257,7 @@ function init() {
 						}
 				}				
 				 merge_same_vein_parts(veinPartsInScene);
-				 createVeinPartLinks(veinPartsInScene);
+				
 			}
 		}
 

@@ -109,4 +109,14 @@ public function get_new ($vein_id)
 	return $vein;
 }
 
+public function distinct_tag_names_for_vein_id($vein_id = NULL)
+{
+	$this->db->select('name');
+	$this->db->distinct();
+	$this->db->where('vein_id',$vein_id);
+	$this->db->where('is_tag', 1);
+	$res = $this->db->get($this->_table_name)->result();
+	return $res;
+}
+
 }

@@ -27,7 +27,9 @@ class Vein extends User_Controller
 		$vein = $this->vein_m->get_by('slug = "'.$slug.'"', TRUE);		
 		if(count($vein) && $slug != NULL){
 			$vein_id = $vein->id;
-			$this->data['veinParts'] = $this->vein_part_m->get_array_by('`vein_id` = "'.$vein_id.'"');
+			$vein_parts = $this->vein_part_m->get_array_by('`vein_id` = "'.$vein_id.'"');
+			$this->data['veinParts'] = $vein_parts;
+			$this->data['vein_part_names'] = $this->vein_part_m->distinct_tag_names_for_vein_id($vein_id);
 
 			$this->data['vein'] = $vein;
 			$this->data['subview'] = 'vein/show';

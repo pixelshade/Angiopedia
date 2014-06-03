@@ -18,7 +18,7 @@
 							?>							
 							<?php echo $vein->info; ?>							
 						</p>
-						<p><a href=<?php echo '"/vein/show/' . $vein->slug.'"'; ?> class="btn btn-primary" role="button">Detail</a></p>
+						<p><a href=<?php echo '"/vein/show/' . $vein->slug.'"'; ?> class="btn btn-primary btn-block" role="button">Detail</a></p>
 					</div>
 				</div>
 			</div>

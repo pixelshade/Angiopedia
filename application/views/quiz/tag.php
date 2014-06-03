@@ -9,7 +9,7 @@
      
    </script>
  </div>
-<div id="infoBox" class="panel panel-default">
+<div id="infoBox" class="panel panel-default" style="cursor:move">
                 <div class="panel-heading"><h1><?php echo $vein->name; ?></h1></div>
                 <div class="panel-body">
                  <?php echo $vein->info; ?>

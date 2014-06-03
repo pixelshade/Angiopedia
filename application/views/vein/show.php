@@ -1,4 +1,4 @@
-<!-- </div> -->
+
 <div>
   <div id="viewBox">
     <script type="text/javascript">  
@@ -8,21 +8,94 @@
      ?>
    </script>
  </div>
-<div id="infoBox" class="panel panel-default">
-                <div class="panel-heading"><h1><?php echo $vein->name; ?></h1>
-                 <br>
-                <?php
-                echo '<a href="/quiz/tag/'.$vein->name.'" class="btn btn-primary">Test</a>';                
-                ?>
-                </div>
-                <div class="panel-body">
-                 <?php echo $vein->info; ?>
-                <span></span>
-                <hr>
-                <div id="veinParts"></div>
-               
-                </div>
-              </div>
+
+ <div id="infoBox" class="panel panel-default hidden-xs" style="cursor:move">
+  <div class="panel-heading"><h1><?php echo $vein->name; ?></h1>
+   <br>
+   <?php
+   echo '<a href="/quiz/tag/'.$vein->name.'" class="btn btn-primary btn-block">Test</a>';                
+   ?>
+ </div>
+ <div class="panel-body">
+   <?php echo $vein->info; ?>
+   <span></span>
+   <hr>
+   <div id="veinParts">
+   <?php
+    
+      foreach ($vein_part_names as $vein) {       
+           echo '<a href="#" class="label label-info" onclick="setSameVeinPartsVisible("'.$vein->name.'")" title="'.$vein->name.'">'.$vein->name.'</a> ';
+      }
+?>
+   </div>
+  
+ </div>
+</div>
+
+<div class="navbar navbar-fixed-bottom visible-xs" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".bone-tools">
+        <span class="sr-only">Toggle tools</span>   
+        <span class="glyphicon glyphicon-info-sign"></span>        
+      </button>
+      <a class="navbar-brand" href="#"><?php $vein->name ?></a>
+    </div>
+    <div class="collapse bone-tools">
+      <ul class="nav navbar-nav">
+
+        <div class="btn-toolbar" role="toolbar">
+          <div class="btn-group">
+            <button type="button" class="btn btn-default">
+              <span class="glyphicon glyphicon-star"></span> Star
+            </button>
+
+            <button type="button" class="btn btn-default">
+              <span class="glyphicon glyphicon-star"></span> Star
+            </button>
+
+            <button type="button" class="btn btn-default">
+              <span class="glyphicon glyphicon-star"></span> Star
+            </button>
+          </div>
+
+
+          <div class="btn-group">
+            <button type="button" class="btn btn-default">
+              <span class="glyphicon glyphicon-search"></span>
+            </button>
+
+            <button type="button" class="btn btn-default">
+              <span class="glyphicon glyphicon-search"></span>
+            </button>
+
+            <button type="button" class="btn btn-default">
+              <span class="glyphicon glyphicon-search"></span>
+            </button>
+          </div>
+        </div>
+
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Bone parts <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+          <?php
+          foreach ($vein_part_names as $vein) {
+            echo '<a href="#" class="label label-info" onclick="setSameVeinPartsVisible("'.$vein->name.'")" title="'.$vein->name.'">'.$vein->name.'</a> ';
+          }
+          ?>           
+          
+           <!--  <li><a href="#">Something else here</a></li>
+            <li class="divider"></li>
+            <li class="dropdown-header">Nav header</li>
+            <li><a href="#">Separated link</a></li> -->                
+          </ul>
+        </li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>
+
+
 
 
 <!--  <div id="infoBox" class="well">
@@ -101,4 +174,5 @@
       <input type="range" name="range" min="1" max="100" value="50" onchange="rangeDanger.value=value">
       <output id="rangeDanger">50</output>
     </div>
-  </div>  -->
+  </div> 
+  -->
