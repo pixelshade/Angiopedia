@@ -2,6 +2,10 @@
 // $("#search").typeahead({ source:vein_names });
 
     $(function(){
-        // $('[name="color"]').colorpicker();
-    	$( "#infoBox" ).draggable();  
+    	if($('[name="color"]').length){
+        	$('[name="color"]').colorpicker();
+    	}
+        if($("#infoBox").length){
+    		$("#infoBox").draggable();  
+        }
     });
