@@ -44,9 +44,9 @@
 				<form class="navbar-form" role="search">
 					<div class="input-group">
 						<input id="search" type="text" class="form-control" autocomplete="off" placeholder="Search" name="q">
-						<div class="input-group-btn">
-							<button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-						</div>
+						<!-- <div class="input-group-btn"> -->
+							<!-- <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button> -->
+						<!-- </div> -->
 					</div>
 				</form>
 			</div>

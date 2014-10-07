@@ -13,11 +13,16 @@ class Migration_Create_categories extends CI_Migration {
 				'unsigned' => TRUE,
 				'auto_increment' => TRUE
 			),
-			// 'parent_id' => array(
-			// 	'type' => 'INT',
-			// 	'constraint' => 11,				
-			// 	'default' = -1
-			// ),
+			'parent' => array(
+				'type' => 'INT',
+				'constraint' => 11,				
+				'default' = -1
+			),
+			'order' => array(
+				'type' => 'INT',
+				'constraint' => 11,				
+				'default' = -1
+			),
 			'name' => array(
 				'type' => 'VARCHAR',
 				'constraint' => 256,								

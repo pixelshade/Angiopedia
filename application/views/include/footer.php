@@ -6,6 +6,7 @@
    <script src="<?php echo base_url('assets/js/TransformControls.js') ?>"></script>
    <script src="<?php echo base_url('assets/js/TrackballControls.js') ?>"></script>
    <script src="<?php echo base_url('assets/js/stats.min.js') ?>"></script>
+   <script src="<?php echo base_url('assets/js/Detector.js') ?>"></script>
    <script src="<?php echo base_url('assets/js/typeahead.js') ?>"></script>
    <script src="<?php echo base_url('assets/js/custom.js') ?>"></script>
    <?php

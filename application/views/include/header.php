@@ -3,9 +3,9 @@
 <head>
    <meta http-equiv="Content-Type" content="text/html" charset="utf-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <meta name="description" content="">
-   <meta name="keywords" content="">
-   <meta name="author" content="">
+   <meta name="description" content="Webový atlas 3d kostí">
+   <meta name="keywords" content="atlas, kosti, 3d, bones, lfuk, anatomia">
+   <meta name="author" content="pixelshade">
 
    <title>Angiopedia</title>
 

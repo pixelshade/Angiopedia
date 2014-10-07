@@ -145,4 +145,43 @@ class Vein_m extends MY_Model
 		return $veins;
 		
 	}
+
+
+	public function get_array_by_categories(){
+		$result = array();
+		$veins = $this->get_by('`published` = "1"');
+		foreach ($veins as $vein) {
+			$result[$vein->category_id][] = $vein;
+		}
+		return $result;
+	}
+
+	// public function get($id= NULL, $single = FALSE){
+	// 	$tmp = parent::get($id, $single);
+	
+	// 	if(!empty($tmp) && !empty($tmp->info)){
+
+	// 		$tmp->info = $this->nahradCustomInfoZnaky($tmp->info);	
+	// 	} 
+	// 	return $tmp;
+	// }
+
+	private function nahradCustomInfoZnaky($string){
+		$popisovaCast =  strstr($string,"@",true);
+		$tabulkovaCast = strstr($string,"@");
+
+		$customChars = array("\n");
+		$replaceChars = array("<br />");
+		$popisovaCast = str_replace($customChars, $replaceChars, $popisovaCast);
+
+		$customChars = array("@","#","$","\n","iCAT","Romer","Comet");
+		$replaceChars = array("<div class='well'><table class='table table-striped'><tr><td><b>",
+			"</td></tr></table></div>",
+			"</b></td><td>",
+			"</td></tr><tr><td><b>", 
+			'<a href="http://www.virtuoss.sk/">iCAT</a>','<a href="http://www.nms.sk/">Romer</a>', '<a href="http://www.nms.sk/">Comet</a>');
+		$tabulkovaCast = str_replace($customChars, $replaceChars, $tabulkovaCast);
+		return $popisovaCast.$tabulkovaCast;
+	}
+
 }

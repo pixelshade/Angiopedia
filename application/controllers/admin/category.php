@@ -47,7 +47,8 @@ class Category extends Admin_Controller
 				'name', 
 				'image', 
 				'info', 
-				// 'parent_id'
+				'parent',
+				'order'
 				));
 			$this->category_m->save($data, $id);
 			redirect('admin/category');

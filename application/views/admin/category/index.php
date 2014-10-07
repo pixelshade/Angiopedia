@@ -5,6 +5,8 @@
 		<thead>
 			<tr>
 				<th>Name</th>
+				<th>order</th>
+				<th>parent</th>
 				<th>image</th>
 				<th>info</th>
 				<th>Edit</th>
@@ -15,6 +17,8 @@
 <?php if(count($categories)): foreach($categories as $category): ?>	
 		<tr>
 			<td><?php echo anchor('admin/category/edit/' . $category->id, $category->name); ?></td>
+			<td><?php echo $category->order; ?></td>
+			<td><?php echo $category->parent; ?></td>
 			<td><?php echo $category->image; ?></td>
 			<td><?php echo $category->info; ?></td>
 			<td><?php echo btn_edit('admin/category/edit/' . $category->id); ?></td>

@@ -2,18 +2,18 @@
 class Category_m extends MY_Model
 {
 	protected $_table_name = 'categories';
-	protected $_order_by = 'name';
+	protected $_order_by = 'order';
 	public $rules = array(		
 		'name' => array(
 			'field' => 'name', 
 			'label' => 'Name', 
 			'rules' => 'trim|required|max_length[100]|xss_clean'
 			), 
-		// 'parent_id' => array(
-		// 	'field' => 'parent_id', 
-		// 	'label' => 'parent_id', 
-		// 	'rules' => 'trim|intval'
-		// 	),
+		'parent_id' => array(
+			'field' => 'parent_id', 
+			'label' => 'parent_id', 
+			'rules' => 'trim|intval'
+			),
 
 		'image' => array(
 			'field' => 'image', 
@@ -31,21 +31,11 @@ class Category_m extends MY_Model
 	{
 		$category = new stdClass();
 		$category->name = '';
-		// $category->parent_id = -1;
+		$category->parent = 0;
+		$category->order = 0;
 		$category->image = '';
 		$category->info = '';		
 		return $category;
-	}
-
-	public function delete ($id)
-	{
-		// Delete a category
-		parent::delete($id);
-		
-		// Reset parent ID for its children
-		$this->db->set(array(
-			'parent_id' => 0
-			))->where('parent_id', $id)->update($this->_table_name);
 	}
 
 	public function save_order ($categories)
@@ -102,7 +92,6 @@ class Category_m extends MY_Model
 		
 		return $array;
 	}
-
 
 	public function get_for_dropdown(){
 		$empty = array(-1 => 'No category');

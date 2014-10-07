@@ -25,6 +25,23 @@ class Vein_part extends Admin_Controller
 		$this->load->view('admin/_layout_main', $this->data);
 	}
 
+	public function fix()
+	{
+		$parts = $this->vein_part_m->get();
+		
+		foreach ($parts as $part) {
+			$part->scale_x = $part->scale_x/100;
+			$part->scale_y = $part->scale_y/100;
+			$part->scale_z = $part->scale_z/100;
+			$this->vein_part_m->save($part,$part->id);
+			print_r($part);
+		}
+		echo "done";
+		// Load view
+		// $this->data['subview'] = 'admin/vein_part/index';
+		// $this->load->view('admin/_layout_main', $this->data);
+	}
+
 	public function order ()
 	{
 		$this->data['sortable'] = TRUE;

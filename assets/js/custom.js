@@ -9,3 +9,9 @@
     		$("#infoBox").draggable();  
         }
     });
+
+    if (typeof Detector === 'undefined' && Detector.webgl ) {
+      $('#noWebGlBone').hide();
+      $('#modelView').show();
+      
+    } 

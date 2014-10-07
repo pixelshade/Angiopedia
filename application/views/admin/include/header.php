@@ -15,7 +15,7 @@
 	<link href="<?php echo base_url('assets/css/bootstrap-colorpicker.min.css') ?>" rel="stylesheet">
 	<script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
 	<script>
-		tinymce.init({selector:'.tinymce'});
+		tinymce.init({selector:'.tinymce', plugins:'table',   tools: "inserttable"});
 	</script>
 </head>
 <body>

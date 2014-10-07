@@ -1,98 +1,111 @@
 
 <div>
-  <div id="viewBox">
-    <script type="text/javascript">  
-     <?php 
-     echo  "var veinJson = ".json_encode($vein). ";\n";
-     echo  "var veinPartsJson = ".json_encode($veinParts).";\n";
-     ?>
-   </script>
- </div>
+	<div id="viewBox">
+		<script type="text/javascript">  
+			<?php 
+			echo  "var veinJson = ".json_encode($vein). ";\n";
+			echo  "var veinPartsJson = ".json_encode($veinParts).";\n";
+			?>
+		</script>
 
- <div id="infoBox" class="panel panel-default hidden-xs" style="cursor:move">
-  <div class="panel-heading"><h1><?php echo $vein->name; ?></h1>
-   <br>
-   <?php
-   echo '<a href="/quiz/tag/'.$vein->name.'" class="btn btn-primary btn-block">Test</a>';                
-   ?>
- </div>
- <div class="panel-body">
-   <?php echo $vein->info; ?>
-   <span></span>
-   <hr>
-   <div id="veinParts">
-   <?php
-    
-      foreach ($vein_part_names as $vein) {       
-           echo '<a href="#" class="label label-info" onclick="setSameVeinPartsVisible("'.$vein->name.'")" title="'.$vein->name.'">'.$vein->name.'</a> ';
-      }
-?>
-   </div>
-  
- </div>
-</div>
-
-<div class="navbar navbar-fixed-bottom visible-xs" role="navigation">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".bone-tools">
-        <span class="sr-only">Toggle tools</span>   
-        <span class="glyphicon glyphicon-info-sign"></span>        
-      </button>
-      <a class="navbar-brand" href="#"><?php $vein->name ?></a>
-    </div>
-    <div class="collapse bone-tools">
-      <ul class="nav navbar-nav">
-
-        <div class="btn-toolbar" role="toolbar">
-          <div class="btn-group">
-            <button type="button" class="btn btn-default">
-              <span class="glyphicon glyphicon-star"></span> Star
-            </button>
-
-            <button type="button" class="btn btn-default">
-              <span class="glyphicon glyphicon-star"></span> Star
-            </button>
-
-            <button type="button" class="btn btn-default">
-              <span class="glyphicon glyphicon-star"></span> Star
-            </button>
-          </div>
+		<div id="noWebGlBone" style="display: none;">			        			
+			<?php
+			echo '<img src="/app_content/'.$vein->image.'" alt="'.$vein->name.'">';
+			?>
+			<div class="alert alert-warning" role="alert"><span class="glyphicon glyphicon-exclamation-sign"></span>
+				<p><em>Váš prehliadač nepodporuje <b>WebGL</b>, zobrazuje sa iba obrázok kosti. Chcete sa dozvedieť <a href="./about.php?#FAQ">viac</a>?</em></p>
+			</div>
+		</div>
 
 
-          <div class="btn-group">
-            <button type="button" class="btn btn-default">
-              <span class="glyphicon glyphicon-search"></span>
-            </button>
 
-            <button type="button" class="btn btn-default">
-              <span class="glyphicon glyphicon-search"></span>
-            </button>
+	</div>
 
-            <button type="button" class="btn btn-default">
-              <span class="glyphicon glyphicon-search"></span>
-            </button>
-          </div>
-        </div>
 
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Bone parts <b class="caret"></b></a>
-          <ul class="dropdown-menu">
-          <?php
-          foreach ($vein_part_names as $vein) {
-            echo '<a href="#" class="label label-info" onclick="setSameVeinPartsVisible("'.$vein->name.'")" title="'.$vein->name.'">'.$vein->name.'</a> ';
-          }
-          ?>           
-          
+	<div id="infoBox" class="panel panel-default hidden-xs col-md-2" style="cursor:move">
+		<div class=""><h1><?php echo $vein->name; ?></h1>
+			<br>
+			<?php
+			echo '<a href="/quiz/tag/'.$vein->name.'" class="btn btn-primary btn-block">Test</a>';                
+			?>
+		</div>
+		<div class="panel-body">
+			<?php echo $vein->info; ?>
+			<span></span>
+			<hr>
+			<div id="veinParts">
+				<?php
+
+				foreach ($vein_part_names as $vein) {       
+					echo '<a href="#" class="label label-info" onclick="setSameVeinPartsVisible("'.$vein->name.'")" title="'.$vein->name.'">'.$vein->name.'</a> ';
+				}
+				?>
+			</div>
+
+		</div>
+	</div>
+
+	<div class="navbar navbar-fixed-bottom visible-xs" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".bone-tools">
+					<span class="sr-only">Toggle tools</span>   
+					<span class="glyphicon glyphicon-info-sign"></span>        
+				</button>
+				<a class="navbar-brand" href="#"><?php $vein->name ?></a>
+			</div>
+			<div class="collapse bone-tools">
+				<ul class="nav navbar-nav">
+
+					<div class="btn-toolbar" role="toolbar">
+						<div class="btn-group">
+							<button type="button" class="btn btn-default">
+								<span class="glyphicon glyphicon-star"></span> Star
+							</button>
+
+							<button type="button" class="btn btn-default">
+								<span class="glyphicon glyphicon-star"></span> Star
+							</button>
+
+							<button type="button" class="btn btn-default">
+								<span class="glyphicon glyphicon-star"></span> Star
+							</button>
+						</div>
+
+
+						<div class="btn-group">
+							<button type="button" class="btn btn-default">
+								<span class="glyphicon glyphicon-search"></span>
+							</button>
+
+							<button type="button" class="btn btn-default">
+								<span class="glyphicon glyphicon-search"></span>
+							</button>
+
+							<button type="button" class="btn btn-default">
+								<span class="glyphicon glyphicon-search"></span>
+							</button>
+						</div>
+					</div>
+
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Bone parts <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<?php
+							foreach ($vein_part_names as $vein) {
+								echo '<a href="#" class="label label-info" onclick="setSameVeinPartsVisible("'.$vein->name.'")" title="'.$vein->name.'">'.$vein->name.'</a> ';
+							}
+							?>           
+
            <!--  <li><a href="#">Something else here</a></li>
             <li class="divider"></li>
             <li class="dropdown-header">Nav header</li>
             <li><a href="#">Separated link</a></li> -->                
-          </ul>
-        </li>
-      </ul>
-    </div><!--/.nav-collapse -->
-  </div>
+        </ul>
+    </li>
+</ul>
+</div><!--/.nav-collapse -->
+</div>
 </div>
 
 

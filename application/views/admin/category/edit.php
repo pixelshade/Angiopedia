@@ -11,6 +11,14 @@
 		<td><?php echo form_dropdown('image', $images , $this->input->post('image') ? $this->input->post('image') : $category->image,'class="form-control"'); ?></td>
 	</tr>
 	<tr>
+		<td>Order</td>
+		<td><?php echo form_input('order', set_value('order', $category->order),'class="form-control"'); ?></td>
+	</tr>
+	<tr>
+		<td>Parent</td>
+		<td><?php echo form_boolean_select('parent', $this->input->post('parent') ? $this->input->post('parent') : $category->parent); ?></td>
+	</tr>
+	<tr>
 		<td>Info</td>
 		<td><?php echo form_textarea('info', set_value('info', $category->info), 'class="tinymce"'); ?></td>
 	</tr>
