@@ -1,7 +1,8 @@
 
 <h2>Arteries</h2>	
 <div  data-spy="scroll" data-target="#affixSpy">
-	<div class="col-md-3 xs-hidden">
+
+	<div class="col-md-3 hidden-xs">
 		<ul id="affixSpy" class="nav nav-tabs nav-stacked" data-spy="affix"   data-offset-top="80" data-offset-bottom="200">
 			<?php
 			$num_open_parents = 0;

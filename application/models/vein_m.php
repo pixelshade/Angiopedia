@@ -137,13 +137,23 @@ class Vein_m extends MY_Model
 	}
 
 
+	public function get_array_names_and_slugs(){
+		$this->db->select('name, slug');		
+		$slugs_and_veins =  $this->db->get_where($this->_table_name, '`published` = "1"')->result_array();
+		// print_r($slugs_and_veins);		
+		return $slugs_and_veins;		
+	}
+
 	public function get_array_names(){
-		$this->db->select('name');		
-		$veins =  $this->db->get_where($this->_table_name, '`published` = "1"')->result_array();
-		$veins = array_column($veins,'name');
-		// dump($veins);
-		return $veins;
-		
+		$slugs_and_veins = $this->get_array_names_and_slugs();		
+		$names = array_column($slugs_and_veins,'name');		
+		return $names;		
+	}
+
+	public function get_array_slugs(){
+		$slugs_and_veins = $this->get_array_names_and_slugs();		
+		$slugs = array_column($slugs_and_veins,'slug');		
+		return $slugs;		
 	}
 
 
