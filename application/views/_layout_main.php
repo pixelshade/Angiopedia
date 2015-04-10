@@ -42,15 +42,8 @@
 
 			<div class="col-sm-3 col-md-3 navbar-right">
 				<form class="navbar-form" role="search">
-					<div class="input-group">
-						<form action="./vein/show/" method="get">
-						<input id="search" type="text" class="form-control" autocomplete="off">
-						 <!-- data-updater="console.log(item);" data-provide="typeahead" placeholder="Search" name="q"
-						data-source='<?php if(!empty($json_veins)) echo $json_veins; ?>' -->
-						<!-- <div class="input-group-btn"> -->
-							<!-- <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button> -->
-						<!-- </div> -->
-						</form>
+					<div class="input-group">					
+						<input id="search" type="text" class="form-control" placeholder="Search" autocomplete="off">
 					</div>
 				</form>
 			</div>

@@ -1,4 +1,12 @@
 <!-- </div> -->
+<h3>Correctly tagged</h3>
+
+<div class="progress progress-striped">
+  <div id="progressBar" class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">    
+    0%
+  </div>
+</div>
+
 <div>
   <div id="viewBox">
     <script type="text/javascript">  
@@ -9,7 +17,7 @@
      
    </script>
  </div>
-<div id="infoBox" class="panel panel-default" style="cursor:move">
+<div id="infoBox" class="panel panel-default col-md-2" style="cursor:move">
                 <div class="panel-heading"><h1><?php echo $vein->name; ?></h1></div>
                 <div class="panel-body">
                  <?php echo $vein->info; ?>
@@ -27,13 +35,7 @@
         <input id="userTagName" type="text" placeholder="Name of the part" class="form-control" />        
       </div>
     </div>
-<h3>Correctly tagged</h3>
 
-<div class="progress progress-striped">
-  <div id="progressBar" class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">    
-    0%
-  </div>
-</div>
 
 <!-- <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#loading-modal">
   <i class="glyphicon glyphicon-play"></i> Start Processing

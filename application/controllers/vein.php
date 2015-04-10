@@ -8,9 +8,7 @@ class Vein extends User_Controller
 		$this->load->model('vein_part_m');
 		$this->load->model('vein_m');
 		$this->load->model('category_m');
-		$this->data['categories'] = $this->category_m->get();		
-		$this->data['vein_names'] = $this->vein_m->get_array_names();		
-		$this->data['vein_slugs'] = $this->vein_m->get_array_slugs();
+		$this->data['categories'] = $this->category_m->get();	
 	}
 
 	public function index ()

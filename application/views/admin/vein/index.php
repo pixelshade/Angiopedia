@@ -21,7 +21,7 @@
 <?php if(count($veins)): foreach($veins as $vein): ?>	
 		<tr>
 			<td><?php echo anchor('admin/vein/edit/' . $vein->id, $vein->name); ?></td>
-			<td><?php echo $vein->category_id; ?></td>
+			<td><?php if(array_key_exists($vein->category_id, $categories)) echo $categories[$vein->category_id]; ?></td>
 			<td><?php echo $vein->model; ?></td>
 			<td><?php if(!empty($vein->image)) echo '<a href=../app_content/'.$vein->image.'>'.$vein->image.'</a>'; ?> </td>
 <!--			<td>--><?php //echo $vein->info; ?><!--</td>-->
