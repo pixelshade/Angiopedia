@@ -2,7 +2,7 @@
 var camera, scene, renderer, control, viewBox, mainVein;
 var viewBoxWidth, viewBoxHeight;
 var aspectRatio = 1.7;
-var folder = "../../../app_content/";
+var folder = "/app_content/";
 
 init();
 render();

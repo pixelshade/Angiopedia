@@ -42,35 +42,15 @@ class Vein_part extends Admin_Controller
 		// $this->load->view('admin/_layout_main', $this->data);
 	}
 
-	public function order ()
-	{
-		$this->data['sortable'] = TRUE;
-		$this->data['subview'] = 'admin/vein_part/order';
-		$this->load->view('admin/_layout_main', $this->data);
-	}
 
-	public function order_ajax ()
-	{
-		// Save order from ajax call
-		if (isset($_POST['sortable'])) {
-			$this->vein_part_m->save_order($_POST['sortable']);
-		}
-		
-		// Fetch all vein_parts
-		$this->data['vein_parts'] = $this->vein_part_m->get_nested();
-		
-		// Load view
-		$this->load->view('admin/vein_part/order_ajax', $this->data);
-	}
-
-	public function edit ($id_vein = NULL, $id = NULL)
+	public function edit ($id_vein = NULL, $id_edited_part = NULL)
 	{
 		if($id_vein== NULL) redirect('admin/vein_part');
 
 		$this->data['vein'] = $this->vein_m->get_by('`id` = "'.$id_vein.'"',TRUE);
 		// Fetch a vein_part or set a new one
-		if ($id) {
-			$this->data['vein_part'] = $this->vein_part_m->get($id);
+		if ($id_edited_part) {
+			$this->data['vein_part'] = $this->vein_part_m->get($id_edited_part);
 			count($this->data['vein_part']) || $this->data['errors'][] = 'vein_part could not be found';
 		}
 		else {
@@ -104,7 +84,7 @@ class Vein_part extends Admin_Controller
 				'position_z',
 				));
 			$data['color'] = str_replace("#", "0x", $data['color']);
-			$this->vein_part_m->save($data, $id);
+			$this->vein_part_m->save($data, $id_edited_part);
 			redirect('admin/vein_part');
 		}
 		

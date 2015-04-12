@@ -52,11 +52,12 @@ class Content_file extends Admin_Controller
         else
         {
             $config['upload_path'] = $this->data['content_dir'];//$this->content_files_model->upload_path;
-            $config['allowed_types'] = 'gif|jpg|png|js';
+            $config['allowed_types'] = 'gif|jpg|png|.js|application/javascript|application';
             $config['max_size'] = 1024 * 8 * 8;
            // $config['encrypt_name'] = TRUE;
 
             $this->load->library('upload', $config);
+            $this->upload->initialize($config);
 
             if (!$this->upload->do_upload($file_element_name))
             {
@@ -66,6 +67,7 @@ class Content_file extends Admin_Controller
             else
             {
                 $data = $this->upload->data();
+                var_dump($data);
                 $file_id = $this->content_files_model->insert_file($data['file_name']);
                 if($file_id)
                 {

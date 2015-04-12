@@ -28,7 +28,7 @@
 		<tbody>
 			<?php if(count($vein_parts)): foreach($vein_parts as $vein_part): ?>	
 				<tr>
-					<td><?php echo anchor('admin/vein_part/edit/' . $vein_part->id, $vein_part->name); ?></td>
+					<td><?php echo anchor('admin/vein_part/edit/' . $vein_part->vein_id ."/".$vein_part->id, $vein_part->name); ?></td>
 					<td><?php if(array_key_exists($vein_part->vein_id, $veins)) echo $veins[$vein_part->vein_id]; ?></td>
 					<td><?php echo $vein_part->image; ?></td>
 					<td><?php echo $vein_part->color; ?></td>
@@ -44,7 +44,7 @@
 					<td><?php echo $vein_part->position_x; ?></td>
 					<td><?php echo $vein_part->position_y; ?></td>
 					<td><?php echo $vein_part->position_z; ?></td> -->
-					<td><?php echo btn_edit('admin/vein_part/edit/' . $vein_part->id); ?></td>
+					<td><?php echo btn_edit('admin/vein_part/edit/' . $vein_part->vein_id ."/".$vein_part->id); ?></td>
 					<td><?php echo btn_delete('admin/vein_part/delete/' . $vein_part->id); ?></td>
 				</tr>
 			<?php endforeach; ?>

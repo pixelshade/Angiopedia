@@ -35,46 +35,46 @@
 	</tr>
 	<tr>	
 		<td>Color</td>
-		<td><?php echo form_input('color', set_value('color', $vein_part->color), 'class="form-control"'); ?>
+		<td><?php echo form_input('color', set_value('color', $vein_part->color), 'class="form-control" data-color-format="hex"'); ?>
 		</td>
 	</tr>
 	<tr>	
 		<td>Info</td>
 		<td><?php echo form_textarea('info', set_value('info', $vein_part->info), 'class="tinymce"'); ?></td>
 	</tr>
-	<tr class="hidden">	
+	<tr>
 		<td>scale_x</td>
 		<td><?php echo form_input('scale_x', set_value('scale_x', $vein_part->scale_x), 'class="form-control"'); ?></td>
 	</tr>
-<tr class="hidden">	
+<tr>
 		<td>scale_y</td>
 		<td><?php echo form_input('scale_y', set_value('scale_y', $vein_part->scale_y), 'class="form-control"'); ?></td>
 	</tr>
-<tr class="hidden">	
+<tr>
 		<td>scale_z</td>
 		<td><?php echo form_input('scale_z', set_value('scale_z', $vein_part->scale_z), 'class="form-control"'); ?></td>
 	</tr>
-<tr class="hidden">	
+<tr>
 		<td>rotation_x</td>
 		<td><?php echo form_input('rotation_x', set_value('rotation_x', $vein_part->rotation_x), 'class="form-control"'); ?></td>
 	</tr>
-<tr class="hidden">	
+<tr>
 		<td>rotation_y</td>
 		<td><?php echo form_input('rotation_y', set_value('rotation_y', $vein_part->rotation_y), 'class="form-control"'); ?></td>
 	</tr>
-<tr class="hidden">	
+<tr>
 		<td>rotation_z</td>
 		<td><?php echo form_input('rotation_z', set_value('rotation_z', $vein_part->rotation_z), 'class="form-control"'); ?></td>
 	</tr>
-<tr class="hidden">	
+<tr>
 		<td>position_x</td>
 		<td><?php echo form_input('position_x', set_value('position_x', $vein_part->position_x), 'class="form-control"'); ?></td>
 	</tr>
-<tr class="hidden">	
+<tr>
 		<td>position_y</td>
 		<td><?php echo form_input('position_y', set_value('position_y', $vein_part->position_y), 'class="form-control"'); ?></td>
 	</tr>
-<tr class="hidden">	
+<tr>
 		<td>position_z</td>
 		<td><?php echo form_input('position_z', set_value('position_z', $vein_part->position_z), 'class="form-control"'); ?></td>
 	</tr>

@@ -27,7 +27,7 @@ class Vein_part_m extends MY_Model
 		'color' => array(
 			'field' => 'color', 
 			'label' => 'color', 
-			'rules' => 'trim|required'
+			'rules' => 'trim'
 			),
 		'is_tag' => array(
 			'field' => 'is_tag', 

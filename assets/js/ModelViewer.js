@@ -13,6 +13,8 @@ var msgNotSelected = "";//"Not selected";
 var showStats = false;
 var showGrid = false;
 var mouseIntersectDetectionEnabled = true;
+// if objects have no color set this is the default material color
+var DEFAULT_BONE_COLOR = 0xE3E3E3;
 
 init();
 animate();
@@ -181,7 +183,8 @@ function init() {
 			return function ( geometry ) {				
 				geometry.computeVertexNormals();
 
-				var materialColor = (veinPartsJson[iterator]==undefined) ?  0x636363 : parseInt(veinPartsJson[iterator].color);
+
+                var materialColor = (veinPartsJson[iterator]==undefined || isNaN(parseInt(veinPartsJson[iterator].color))) ?  DEFAULT_BONE_COLOR : parseInt(veinPartsJson[iterator].color);
 				material = new THREE.MeshLambertMaterial( {color: materialColor , shading: THREE.SmoothShading});
 				console.log(materialColor);
 				// material = new THREE.MeshNormalMaterial( {color: 0x66CCFF });
