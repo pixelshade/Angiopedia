@@ -18,6 +18,8 @@ var msgNotSelected = "";//"Not selected";
 var showStats = false;
 var showGrid = false;
 var mouseIntersectDetectionEnabled = true;
+var DEFAULT_BONE_COLOR = 0xE3E3E3;
+
 
 init();
 animate();
@@ -185,7 +187,7 @@ animate();
 			return function ( geometry ) {				
 				geometry.computeVertexNormals();
 
-				var materialColor = (veinPartsJson[iterator]==undefined) ?  0x636363 : parseInt(veinPartsJson[iterator].color);
+                var materialColor = (veinPartsJson[iterator]==undefined || isNaN(parseInt(veinPartsJson[iterator].color))) ?  DEFAULT_BONE_COLOR : parseInt(veinPartsJson[iterator].color);
 				material = new THREE.MeshLambertMaterial( {color: materialColor , shading: THREE.SmoothShading});
 				console.log(materialColor);
 				// material = new THREE.MeshNormalMaterial( {color: 0x66CCFF });
@@ -200,13 +202,13 @@ animate();
 		}
 
 		function loadModel(modelName, modelLoadedCallback, iterator){
-			if(modelName!=""){
+            if((typeof modelName !== 'undefined') && modelName!=""){
 				var loader = new THREE.JSONLoader();
 				// console.log("loading "+ folder+modelName);
 				if(iterator==undefined){					
 					loader.load( folder+modelName, function ( geometry ) {
 					geometry.computeVertexNormals();
-					var materialColor = (veinPartsJson[iterator]==undefined) ?  0xE3E3E3 : parseInt(veinPartsJson[iterator].color);
+                        var materialColor = (veinPartsJson[iterator]==undefined || isNaN(parseInt(veinPartsJson[iterator].color))) ?  DEFAULT_BONE_COLOR : parseInt(veinPartsJson[iterator].color);
 					console.log(materialColor);
 					material = new THREE.MeshLambertMaterial( {color: materialColor , shading: THREE.SmoothShading});
 					var mesh = new THREE.Mesh( geometry, material ); 					

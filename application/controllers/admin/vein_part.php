@@ -51,12 +51,13 @@ class Vein_part extends Admin_Controller
 		// Fetch a vein_part or set a new one
 		if ($id_edited_part) {
 			$this->data['vein_part'] = $this->vein_part_m->get($id_edited_part);
+            $this->data['vein_part']->color = str_replace("0x","#", $this->data['vein_part']->color);
 			count($this->data['vein_part']) || $this->data['errors'][] = 'vein_part could not be found';
 		}
 		else {
-			$this->data['vein_part'] = $this->vein_part_m->get_new($id_vein);
+            $this->data['vein_part'] = $this->vein_part_m->get_new($id_vein);
 		}
-		
+
 
 		
 		// Set up the form

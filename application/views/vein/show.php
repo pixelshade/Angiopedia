@@ -10,7 +10,7 @@
 
 		<div id="noWebGlBone" style="display: none;">			        			
 			<?php
-			echo '<img src="/app_content/'.$vein->image.'" alt="'.$vein->name.'">';
+//			echo '<img src="/app_content/'.$vein->image.'" alt="'.$vein->name.'">';
 			?>
 			<div class="alert alert-warning" role="alert"><span class="glyphicon glyphicon-exclamation-sign"></span>
 				<p><em>Váš prehliadač nepodporuje <b>WebGL</b>, zobrazuje sa iba obrázok kosti. Chcete sa dozvedieť <a href="./about.php?#FAQ">viac</a>?</em></p>
@@ -23,14 +23,14 @@
 
 
 	<div id="infoBox" class="panel panel-default hidden-xs col-md-2" style="cursor:move">
-		<div class=""><h1><?php echo $vein->name; ?></h1>
-			<br>
+		<div class="panel-heading"><h1><?php echo $vein->name; ?></h1>
+
 			<?php
-			echo '<a href="/quiz/tag/'.$vein->name.'" class="btn btn-primary btn-block">Test</a>';                
+			echo '<a href="/quiz/tag/'.$vein->name.'" class="btn btn-primary btn-xs pull-right">Preskúšať časti</a>';
 			?>
 		</div>
 		<div class="panel-body">
-			<?php echo $vein->info; ?>
+			<?php echo $vein->info; ?>Ukazuješ na:
 			<span></span>
 			<hr>
 			<div id="veinParts">

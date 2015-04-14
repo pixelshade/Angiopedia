@@ -13,12 +13,14 @@ class Vein extends User_Controller
 
 	public function index ()
 	{
+//        redirect("vein/show/main");
 
 		// Fetch all veins
 		$this->data['veins'] = $this->vein_m->get_array_by_categories();
 		// Load view
 		$this->data['subview'] = 'vein/index';
 		$this->load->view('_layout_main', $this->data);
+
 	}
 
 	public function show ($slug = NULL) 

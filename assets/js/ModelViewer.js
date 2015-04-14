@@ -9,19 +9,20 @@ var mouse = { x: 0, y: 0 }, INTERSECTED;
 /* settings */
 var aspectRatio = 1.7;
 var folder = "../../../app_content/";
-var msgNotSelected = "";//"Not selected";
+var msgNotSelected = " ";//"Not selected";
 var showStats = false;
 var showGrid = false;
 var mouseIntersectDetectionEnabled = true;
 // if objects have no color set this is the default material color
 var DEFAULT_BONE_COLOR = 0xE3E3E3;
+var slug_to_redirect = "";
 
 init();
 animate();
 
 function init() {
 
-				Offset = $('#viewBox').offset(); 
+				Offset = $('#viewBox').offset();
 				//set up width
 				viewBoxWidth = $("#viewBox").width();
 				viewBoxHeight = window.innerHeight-200;// viewBoxWidth / aspectRatio;
@@ -186,7 +187,7 @@ function init() {
 
                 var materialColor = (veinPartsJson[iterator]==undefined || isNaN(parseInt(veinPartsJson[iterator].color))) ?  DEFAULT_BONE_COLOR : parseInt(veinPartsJson[iterator].color);
 				material = new THREE.MeshLambertMaterial( {color: materialColor , shading: THREE.SmoothShading});
-				console.log(materialColor);
+				//console.log(materialColor);
 				// material = new THREE.MeshNormalMaterial( {color: 0x66CCFF });
 				mesh = new THREE.Mesh( geometry, material ); 
 				// new THREE.MeshLambertMaterial( {color: 0xCC0000, shading: THREE.FlatShading, overdraw: true}) 				
@@ -199,14 +200,14 @@ function init() {
 		}
 
 		function loadModel(modelName, modelLoadedCallback, iterator){
-			if(modelName!=""){
+			if((typeof modelName !== 'undefined') && modelName!=""){
 				var loader = new THREE.JSONLoader();
 				// console.log("loading "+ folder+modelName);
-				if(iterator==undefined){					
+				if(iterator==undefined){
 					loader.load( folder+modelName, function ( geometry ) {
 					geometry.computeVertexNormals();
-					var materialColor = (veinPartsJson[iterator]==undefined) ?  0xE3E3E3 : parseInt(veinPartsJson[iterator].color);
-					console.log(materialColor);
+                        var materialColor = (veinPartsJson[iterator]==undefined || isNaN(parseInt(veinPartsJson[iterator].color))) ?  DEFAULT_BONE_COLOR : parseInt(veinPartsJson[iterator].color);
+					//console.log(materialColor);
 					material = new THREE.MeshLambertMaterial( {color: materialColor , shading: THREE.SmoothShading});
 					var mesh = new THREE.Mesh( geometry, material ); 					
 			 		mesh.name=modelName;		 		
@@ -255,7 +256,8 @@ function init() {
 								veinPartsInScene.push(loadedMesh);
 							}
 							render();					
-						} else {								
+						} else {
+                            console.log(veinPartsJson[i].model);
 							loadModel(veinPartsJson[i].model,  loadedModelPartCallback, i);	
 						}
 				}				
@@ -284,6 +286,13 @@ function init() {
 
 	}
 
+$('#viewBox').mousedown(function (event) {
+    console.log("mousedown");
+    if(slug_to_redirect != ""){
+        window.location.href = "http://angio.skeletopedia.sk/vein/show/"+slug_to_redirect;
+        console.log("redir to:"+slug_to_redirect);
+    }
+});
 
 
 	$('#viewBox').mousemove(function(event){
@@ -304,13 +313,14 @@ function init() {
 					if ( INTERSECTED != intersects[ 0 ].object) {						
 						
 						INTERSECTED = intersects[ 0 ].object;											
-						$('#infoBox span').html('<hr><h4>'+veinPartsJson[INTERSECTED.name].name+'</h4>'+veinPartsJson[INTERSECTED.name].info);
+						$('#infoBox span').html('<h4>'+veinPartsJson[INTERSECTED.name].name+'</h4>'+veinPartsJson[INTERSECTED.name].info);
 						viewBox.style.cursor = 'help';
 						setSameVeinPartsVisible(intersects[ 0 ].object.tag);	
 						  // $('#popover').css('left', mouse.x-(200)+'px');
       		// 			  $('#popover').css('top', mouse.y-(100)+'px');		
       		// 			  $('#popover').show();			
-						
+						slug_to_redirect = veinPartsJson[INTERSECTED.name].info;
+                        console.log(slug_to_redirect);
 					} else {
 						//je vybrate to co bolo pred tym
 					}
@@ -319,6 +329,9 @@ function init() {
 					// if ( INTERSECTED ) INTERSECTED.material.emissive.setHex( INTERSECTED.currentHex );
 					viewBox.style.cursor = 'auto';					
 					INTERSECTED = null;
+
+                    slug_to_redirect = "";
+                    console.log(slug_to_redirect);
 					setAllVeinPartsInvisible();					
 					$('#infoBox span').html(msgNotSelected);
 				}
