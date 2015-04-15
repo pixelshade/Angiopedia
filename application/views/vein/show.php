@@ -26,7 +26,7 @@
 		<div class="panel-heading"><h1><?php echo $vein->name; ?></h1>
 
 			<?php
-			echo '<a href="/quiz/tag/'.$vein->name.'" class="btn btn-primary btn-xs pull-right">Preskúšať časti</a>';
+			echo '<a href="/quiz/tag/'.$vein->slug.'" class="btn btn-primary btn-xs pull-right">Preskúšať časti</a>';
 			?>
 		</div>
 		<div class="panel-body">
@@ -37,7 +37,7 @@
 				<?php
 
 				foreach ($vein_part_names as $vein) {       
-					echo '<a href="#" class="label label-info" onclick="setSameVeinPartsVisible("'.$vein->name.'")" title="'.$vein->name.'">'.$vein->name.'</a> ';
+					echo '<a href="#" class="label label-info" onclick="setSameVeinPartsVisible(\''.$vein->name.'\')" title="'.$vein->name.'">'.$vein->name.'</a> ';
 				}
 				?>
 			</div>

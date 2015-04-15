@@ -25,6 +25,10 @@ Info dragable box
     padding-right: 0px;
 }
 
+#infoBox span{
+    font-weight: bold;
+}
+
 .panel-heading h1{
     font-size: 16px;
     display: inline;

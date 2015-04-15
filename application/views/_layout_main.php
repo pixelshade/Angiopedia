@@ -10,7 +10,7 @@
  				<span class="icon-bar"></span>
  				<span class="icon-bar"></span>
  			</button>
- 			<a class="navbar-brand" href="./">Angiopedia</a>
+ 			<a class="navbar-brand" href="/">Angiopedia</a>
  		</div>
  		<div class="navbar-collapse collapse">
  			<ul class="nav navbar-nav">
@@ -26,7 +26,7 @@
 					</li>
 				-->
 				
-				<li <?php echo $page=="/vein"? 'class="active"' : ''; ?>><a href="/vein">Arteries</a></li>			
+<!--				<li><?php //echo $page=="/vein"? 'class="active"' : ''; ?><a href="/vein">Arteries</a></li>			-->
 				<li <?php echo $page=="quiz"? 'class="active"' : ''; ?>><a href="/quiz/">Quiz</a></li>					
 				<li <?php echo $page=="about"? 'class="active"' : ''; ?>><a href="/about/">About</a></li>					
 			</ul>

@@ -9,7 +9,7 @@ var mouse = { x: 0, y: 0 }, INTERSECTED;
 /* settings */
 var aspectRatio = 1.7;
 var folder = "../../../app_content/";
-var msgNotSelected = " ";//"Not selected";
+var msgNotSelected = "";//"Not selected";
 var showStats = false;
 var showGrid = false;
 var mouseIntersectDetectionEnabled = true;
@@ -48,6 +48,7 @@ function init() {
 				loadModel(veinJson.model, function(loadedMesh){	
 					render();
 					addTrackballControls(loadedMesh, viewBox);
+                    setModelWithJsonParams(loadedMesh,veinJson);
 				});
 				if(showStats){
 					addStats();
@@ -208,7 +209,7 @@ function init() {
 					geometry.computeVertexNormals();
                         var materialColor = (veinPartsJson[iterator]==undefined || isNaN(parseInt(veinPartsJson[iterator].color))) ?  DEFAULT_BONE_COLOR : parseInt(veinPartsJson[iterator].color);
 					//console.log(materialColor);
-					material = new THREE.MeshLambertMaterial( {color: materialColor , shading: THREE.SmoothShading});
+                      material = new THREE.MeshLambertMaterial( {color: materialColor , shading: THREE.SmoothShading});
 					var mesh = new THREE.Mesh( geometry, material ); 					
 			 		mesh.name=modelName;		 		
 			 		scene.add( mesh );		 					  	
@@ -257,7 +258,7 @@ function init() {
 							}
 							render();					
 						} else {
-                            console.log(veinPartsJson[i].model);
+                            //console.log(veinPartsJson[i].model);
 							loadModel(veinPartsJson[i].model,  loadedModelPartCallback, i);	
 						}
 				}				
@@ -287,10 +288,9 @@ function init() {
 	}
 
 $('#viewBox').mousedown(function (event) {
-    console.log("mousedown");
     if(slug_to_redirect != ""){
+        slug_to_redirect = jQuery(slug_to_redirect).text();
         window.location.href = "http://angio.skeletopedia.sk/vein/show/"+slug_to_redirect;
-        console.log("redir to:"+slug_to_redirect);
     }
 });
 
@@ -313,14 +313,14 @@ $('#viewBox').mousedown(function (event) {
 					if ( INTERSECTED != intersects[ 0 ].object) {						
 						
 						INTERSECTED = intersects[ 0 ].object;											
-						$('#infoBox span').html('<h4>'+veinPartsJson[INTERSECTED.name].name+'</h4>'+veinPartsJson[INTERSECTED.name].info);
+						$('#infoBox span').html(veinPartsJson[INTERSECTED.name].name); //+veinPartsJson[INTERSECTED.name].info);
 						viewBox.style.cursor = 'help';
 						setSameVeinPartsVisible(intersects[ 0 ].object.tag);	
 						  // $('#popover').css('left', mouse.x-(200)+'px');
       		// 			  $('#popover').css('top', mouse.y-(100)+'px');		
       		// 			  $('#popover').show();			
 						slug_to_redirect = veinPartsJson[INTERSECTED.name].info;
-                        console.log(slug_to_redirect);
+
 					} else {
 						//je vybrate to co bolo pred tym
 					}
@@ -331,7 +331,6 @@ $('#viewBox').mousedown(function (event) {
 					INTERSECTED = null;
 
                     slug_to_redirect = "";
-                    console.log(slug_to_redirect);
 					setAllVeinPartsInvisible();					
 					$('#infoBox span').html(msgNotSelected);
 				}
@@ -356,22 +355,22 @@ $('#viewBox').mousedown(function (event) {
 				}
 			};
 
-			function setSameVeinPartsVisible(selectedPartName){		
+			function setSameVeinPartsVisible(selectedPartName){
 				for (var i = veinPartsInScene.length - 1; i >= 0; i--) {	
 					if(veinPartsInScene[i].tag==selectedPartName){
-						veinPartsInScene[i].visible=true;							
+						veinPartsInScene[i].visible=true;
 					} else {
-						veinPartsInScene[i].visible=false;						
+						veinPartsInScene[i].visible=false;
 					}
 				};
-				render();
+				//render();
 			}		
 
 			function setAllVeinPartsInvisible(){
 				for (var i = veinPartsInScene.length - 1; i >= 0; i--) {					
 						veinPartsInScene[i].visible=false;						
 				}				
-				render();
+				//render();
 			}		
 
 			function createVeinPartLinks(orderedVeinParts){

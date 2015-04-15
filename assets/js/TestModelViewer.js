@@ -52,6 +52,7 @@ animate();
 				loadModel(veinJson.model, function(loadedMesh){	
 					render();
 					addTrackballControls(loadedMesh, viewBox);
+                    setModelWithJsonParams(loadedMesh,veinJson);
 				});
 				if(showStats){
 					addStats();
