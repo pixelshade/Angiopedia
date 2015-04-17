@@ -15,11 +15,26 @@
    <link href="<?php echo base_url('assets/css/font-awesome.css') ?>" rel="stylesheet">
    <link href="<?php echo base_url('assets/css/pace.css') ?>" rel="stylesheet">
 
-   <script type="text/javascript">(function(c,d){if(!c._7S){var f="initialize identify update track trackLink trackEnhancedEcommerce getHtml showHtml showForm ping".split(" "),a=d.createElement("script"),g="https:"===d.location.protocol?"https:":"http:",e,b=0;c._7S={_:[]};var h=function(a){return function(){this._.push([a,arguments])}};for(;b<f.length;)e=f[b++],c._7S[e]=h(e);a.type="text/javascript";a.async=!0;a.src=g+"//api.7segments.com/js/7segments-1.4.min.js";d.getElementsByTagName("head")[0].appendChild(a)}})(window,document);</script>
-<script type="text/javascript">
-    _7S.initialize({ 
-        token: 'f76e3adc-81fc-11e4-af4e-0cc47a049482'
-    });
-</script>
+
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-39948329-2', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+
 </head>
 <body>
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.3&appId=1409218816014674";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>

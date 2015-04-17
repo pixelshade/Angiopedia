@@ -16,15 +16,15 @@ var mouseIntersectDetectionEnabled = true;
 // if objects have no color set this is the default material color
 var DEFAULT_BONE_COLOR = 0xE3E3E3;
 var slug_to_redirect = "";
-
+var VIEWBOX = $("#viewBox");
 init();
 animate();
 
 function init() {
 
-				Offset = $('#viewBox').offset();
+				Offset = VIEWBOX.offset();
 				//set up width
-				viewBoxWidth = $("#viewBox").width();
+				viewBoxWidth = VIEWBOX.width();
 				viewBoxHeight = window.innerHeight-200;// viewBoxWidth / aspectRatio;
 
 				projector = new THREE.Projector();
@@ -62,9 +62,9 @@ function init() {
 
 		function onWindowResize() {
 			if(control!=null)	control.handleResize();
-			Offset = $('#viewBox').offset();
+			Offset = VIEWBOX.offset();
 
-			viewBoxWidth = $("#viewBox").width();
+			viewBoxWidth = VIEWBOX.width();
 			viewBoxHeight = viewBoxWidth / aspectRatio;
 			renderer.setSize( viewBoxWidth, viewBoxHeight );
 			camera.aspect = viewBoxWidth / viewBoxHeight;
@@ -287,7 +287,9 @@ function init() {
 
 	}
 
-$('#viewBox').mousedown(function (event) {
+VIEWBOX.mousedown(function (event) {
+    //prevent unintentionall right click on link
+    if(event.which==3) return;
     if(slug_to_redirect != ""){
         slug_to_redirect = jQuery(slug_to_redirect).text();
         window.location.href = "http://angio.skeletopedia.sk/vein/show/"+slug_to_redirect;
@@ -295,7 +297,7 @@ $('#viewBox').mousedown(function (event) {
 });
 
 
-	$('#viewBox').mousemove(function(event){
+	VIEWBOX.mousemove(function(event){
 		if(mouseIntersectDetectionEnabled){
 				// event.preventDefault();	
 
@@ -313,7 +315,7 @@ $('#viewBox').mousedown(function (event) {
 					if ( INTERSECTED != intersects[ 0 ].object) {						
 						
 						INTERSECTED = intersects[ 0 ].object;											
-						$('#infoBox span').html(veinPartsJson[INTERSECTED.name].name); //+veinPartsJson[INTERSECTED.name].info);
+						$('.partName').html(veinPartsJson[INTERSECTED.name].name); //+veinPartsJson[INTERSECTED.name].info);
 						viewBox.style.cursor = 'help';
 						setSameVeinPartsVisible(intersects[ 0 ].object.tag);	
 						  // $('#popover').css('left', mouse.x-(200)+'px');
@@ -332,7 +334,7 @@ $('#viewBox').mousedown(function (event) {
 
                     slug_to_redirect = "";
 					setAllVeinPartsInvisible();					
-					$('#infoBox span').html(msgNotSelected);
+					$('.partName').html(msgNotSelected);
 				}
 
 		}
